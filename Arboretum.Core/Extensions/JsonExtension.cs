@@ -7,7 +7,7 @@ namespace Arboretum.Core.Extensions
 {
     public class JsonExtension
     {
-        public static List<Tree> DeserializeJsonTrees( string json )
+        public static List<Tree> DeserializeTrees( string json )
         {
             var trees = JsonConvert.DeserializeObject<List<Tree>>( json );
             return trees;
