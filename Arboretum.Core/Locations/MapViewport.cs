@@ -1,5 +1,4 @@
-﻿using Arboretum.Core.Helpers;
-
+﻿
 namespace Arboretum.Core.Locations
 {
     public class MapViewport

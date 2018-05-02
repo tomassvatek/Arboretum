@@ -1,5 +1,8 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Arboretum.Core.Models;
+using Newtonsoft.Json;
 
 namespace Arboretum.Core.WebServices
 {
@@ -15,7 +18,7 @@ namespace Arboretum.Core.WebServices
             _httpClient = new HttpClient( );
         }
 
-        public async Task<string> ReadManyAsync( )
+        public async Task<List<Tree>> ReadManyAsync( )
         {
             _httpClient.DefaultRequestHeaders.Accept.Clear( );
             _httpClient.DefaultRequestHeaders.Add( API_KEY, API_KEY_VALUE );
@@ -23,7 +26,8 @@ namespace Arboretum.Core.WebServices
             HttpResponseMessage httpResponse = await _httpClient.GetAsync( "https://www.stromypodkontrolou.cz/client_api/v1/trees?lat_min=49.27646333001661&lat_max=49.27769699366917&lon_min=17.5457698717305&lon_max=17.549203099269562" );
             HttpContent content = httpResponse.Content;
             string data = await content.ReadAsStringAsync( );
-            return data;
+            var trees = JsonConvert.DeserializeObject<List<Tree>>( data );
+            return trees;
         }
     }
 }

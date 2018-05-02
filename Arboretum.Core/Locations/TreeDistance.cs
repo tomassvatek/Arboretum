@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Arboretum.Core.Models;
+﻿using Arboretum.Core.Models;
 
-namespace Arboretum.Core.Helpers
+namespace Arboretum.Core.Locations
 {
     public class TreeDistance
     {
