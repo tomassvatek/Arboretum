@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Newtonsoft.Json;
 
-namespace Arboretum.Core.Helpers
+namespace Arboretum.Core.Locations
 {
     public class LatLng
     {
+        [JsonProperty( "lat" )]
         public double Lattitude { get; set; }
+        [JsonProperty( "lon" )]
         public double Longitude  { get; set; }  
     }
 }
