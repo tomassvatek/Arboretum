@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Arboretum.Core.Models;
+﻿using System.Collections.Generic;
+using Arboretum.Core.Models.Entities;
 
-namespace Arboretum.Core.Locations
+namespace Arboretum.Core.Models.Locations
 {
     public interface IDistanceCalculator
     {

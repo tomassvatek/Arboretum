@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Arboretum.Core.Models;
+using Arboretum.Core.Models.Entities;
 
-namespace Arboretum.Core.Locations
+namespace Arboretum.Core.Models.Locations
 {
     public class HaverniseDistance : IDistanceCalculator
     {

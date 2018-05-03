@@ -1,7 +1,7 @@
-﻿using Arboretum.Core.Locations;
+﻿using Arboretum.Core.Models.Locations;
 using Newtonsoft.Json;
 
-namespace Arboretum.Core.Models
+namespace Arboretum.Core.Models.Entities
 {
     public class Tree
     {

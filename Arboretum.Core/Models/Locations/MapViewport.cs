@@ -1,5 +1,5 @@
 ﻿
-namespace Arboretum.Core.Locations
+namespace Arboretum.Core.Models.Locations
 {
     public class MapViewport
     {

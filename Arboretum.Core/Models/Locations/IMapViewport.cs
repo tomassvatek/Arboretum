@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Arboretum.Core.Locations
+namespace Arboretum.Core.Models.Locations
 {
     public interface IMapViewport
     {
