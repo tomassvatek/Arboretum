@@ -1,15 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Arboretum.Core.Models.Entities;
 using Newtonsoft.Json;
 
 namespace Arboretum.Core.Extensions
 {
-    public static class StringExtensions    
+    public static class StringExtensions
     {
         public static List<Tree> DeserializeTree( this string json )
         {
-            var trees = JsonConvert.DeserializeObject<List<Tree>>( json );
-            return trees;
+            try
+            {
+                var trees = JsonConvert.DeserializeObject<List<Tree>>( json );
+                return trees;
+            }
+            catch ( Exception )
+            {
+                return null;
+            }
         }
     }
 }

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -28,13 +22,14 @@ namespace Arboretum.API
         {
             services.AddMvc( );
 
+            // Configure Swagger
             services.AddSwaggerGen( c =>
             {
                 c.SwaggerDoc( "v1", new Info
                 {
                     Title = "Arboretum API",
                     Version = "v1",
-                    Contact = new Contact( ) { Name = "Tomáš Svatek", Email = "svatektomas117@gmail.com" }
+                    Contact = new Contact( ) { Name = "Tomáš Svatek", Email = "virtualarboretum@gmail.com" }
                 } );
 
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
@@ -49,7 +44,7 @@ namespace Arboretum.API
             if ( env.IsDevelopment( ) )
             {
                 app.UseDeveloperExceptionPage( );
-                app.UseDatabaseErrorPage();
+                app.UseDatabaseErrorPage( );
             }
 
             app.UseSwagger( );

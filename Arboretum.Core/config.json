@@ -1,2 +1,8 @@
 ﻿{
+  "providers": {
+    "provider": {
+      "providerName": "SPK"
+    }
+  }
 }
+
