@@ -1,7 +1,7 @@
 ﻿
 namespace Arboretum.Core.Models.Locations
 {
-    public class MapViewport
+    public class MapViewport : IMapViewport
     {
         public double NorthWest { get; set; }
         public double NorthEast { get; set; }

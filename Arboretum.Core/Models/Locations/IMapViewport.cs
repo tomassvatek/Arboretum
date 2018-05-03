@@ -6,9 +6,9 @@ namespace Arboretum.Core.Models.Locations
 {
     public interface IMapViewport
     {
-        LatLng NorthWest { get; set; }
-        LatLng NorthEast { get; set; }
-        LatLng SouthEast { get; set; }
-        LatLng SouthWest { get; set; }
+        double NorthWest { get; set; }
+        double NorthEast { get; set; }
+        double SouthEast { get; set; }
+        double SouthWest { get; set; }  
     }
 }

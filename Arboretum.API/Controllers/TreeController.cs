@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using Arboretum.Core.Models;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Arboretum.API.Viewmodels;
 using Arboretum.Core.Models.Locations;
-using Arboretum.Core.WebServices;
-using Arboretum.Core.WebServices.Providers;
+using Arboretum.Core.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Arboretum.API.Controllers
@@ -11,16 +11,28 @@ namespace Arboretum.API.Controllers
     [Route( "api/Tree" )]
     public class TreeController : ControllerBase
     {
-        [HttpGet]
-        public async Task<IActionResult> GetTreeAsync( [FromQuery] MapViewport viewport )
+        private readonly ITreeRepository _repository;
+
+        public TreeController( ITreeRepository repository )
         {
-            WebApiClient client = new WebApiClient( new SPKProvider( ) );
-            var data = await client.ReadManyAsync( );
-            if ( data == null )
+            _repository = repository;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetTreesAsync( [FromQuery] MapViewport viewport )
+        {
+            var trees = await _repository.GetTrees( viewport );
+            if ( trees == null )
             {
                 return BadRequest( );
             }
-            return Ok( data );
+            var vm = trees.Select( e => new TreeInfoWindowVm
+            {
+                Id = e.Id,
+                SpeciesCommonName = e.SpeciesCommonName
+            } ).ToList( );
+
+            return Ok( vm );
         }
     }
 }
