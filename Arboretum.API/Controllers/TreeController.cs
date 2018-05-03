@@ -9,6 +9,7 @@ namespace Arboretum.API.Controllers
     [Route( "api/Tree" )]
     public class TreeController : ControllerBase
     {
+        [HttpGet]
         public async Task<IActionResult> GetTreeAsync( )
         {
             WebApiClient client = new WebApiClient( );
