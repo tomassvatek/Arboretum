@@ -27,7 +27,7 @@ namespace Arboretum.Core.Models.Locations
 
             foreach ( var item in _results )
             {
-                item.Distance = Calculate( current.Lattitude, current.Longitude, item.Tree.LatLng.Lattitude, item.Tree.LatLng.Longitude );
+                item.Distance = Calculate( current.Latitude, current.Longitude, item.Tree.LatLng.Latitude, item.Tree.LatLng.Longitude );
             }
 
             Sort( );

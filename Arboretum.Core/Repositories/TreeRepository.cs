@@ -24,7 +24,8 @@ namespace Arboretum.Core.Repositories
 
         public async Task<IEnumerable<Tree>> GetTrees( IMapViewport viewport )
         {
-            var trees =  await _httpClient.ReadManyAsync("?lat_min=49.27646333001661&lat_max=49.27769699366917&lon_min=17.5457698717305&lon_max=17.549203099269562");
+
+            var trees =  await _httpClient.ReadManyAsync($"?lat_min={viewport.SouthWest.Latitude}&lat_max={viewport.NorthEast.Latitude}&lon_min={viewport.SouthWest.Longitude}&lon_max={viewport.NorthEast.Longitude}");
             return trees;
         }
     }

@@ -19,9 +19,10 @@ namespace Arboretum.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetTreesAsync( [FromQuery] MapViewport viewport )
+        public async Task<IActionResult> GetTreesAsync( [FromQuery] MapViewportVm viewport )    
         {
-            var trees = await _repository.GetTrees( viewport );
+            MapViewport mapViewport = new MapViewport( viewport.LatitudeMin, viewport.LatitudeMax, viewport.LongitudeMin, viewport.LongitudeMax );
+            var trees = await _repository.GetTrees( mapViewport );
             if ( trees == null )
             {
                 return BadRequest( );
