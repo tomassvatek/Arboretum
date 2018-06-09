@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Arboretum.API.Controllers
 {
-    [Produces( "application/json" )]
-    [Route( "api/Tree" )]
+    [Produces("application/json")]
+    [Route("api/Tree")]
     public class TreeController : ControllerBase
     {
         private readonly ITreeRepository _repository;
@@ -17,7 +17,7 @@ namespace Arboretum.API.Controllers
         /// Initializes a new instance of the <see cref="TreeController"/> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
-        public TreeController( ITreeRepository repository )
+        public TreeController(ITreeRepository repository)
         {
             _repository = repository;
         }
@@ -28,21 +28,38 @@ namespace Arboretum.API.Controllers
         /// <param name="viewport">The viewport.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetTreesAsync( [FromQuery] MapViewportVm viewport )    
+        public async Task<IActionResult> GetTreesAsync([FromQuery] MapViewportVm viewport)
         {
-            MapViewport mapViewport = new MapViewport( viewport.LatitudeMin, viewport.LatitudeMax, viewport.LongitudeMin, viewport.LongitudeMax );
-            var trees = await _repository.GetTrees( mapViewport );
-            if ( trees == null )
+            MapViewport mapViewport = new MapViewport(viewport.LatitudeMin, viewport.LatitudeMax, viewport.LongitudeMin, viewport.LongitudeMax);
+            var trees = await _repository.GetTrees(mapViewport);
+            if (trees == null)
             {
-                return BadRequest( );
+                return BadRequest();
             }
-            var vm = trees.Select( e => new TreeInfoWindowVm
+            var vm = trees.Select(e => new TreeInfoWindowVm
             {
                 Id = e.Id,
                 SpeciesCommonName = e.SpeciesCommonName
-            } ).ToList( );
+            }).ToList();
 
-            return Ok( vm );
+            return Ok(vm);
+        }
+
+
+        [HttpGet]
+        public IActionResult GetTrees(QuizOption option, [FromQuery] MapViewport viewport)
+        {
+        }
+
+        [HttpGet]
+        public IActionResult GetTree(int id)
+        {
+            var tree = _repository.GetTreeById(id);
+            if (tree == null)
+            {
+                return NotFound();
+            }
+            return Ok(tree);
         }
     }
 }
