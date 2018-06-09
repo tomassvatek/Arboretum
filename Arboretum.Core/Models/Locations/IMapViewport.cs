@@ -2,7 +2,7 @@
 namespace Arboretum.Core.Models.Locations
 {
     /// <summary>
-    /// The inteface represents a map viewport. It is what a user sees. 
+    /// The inteface represents a visibile region. 
     /// The map viewport depends on user's current location.
     /// </summary>
     public interface IMapViewport

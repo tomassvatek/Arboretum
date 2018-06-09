@@ -13,11 +13,20 @@ namespace Arboretum.API.Controllers
     {
         private readonly ITreeRepository _repository;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TreeController"/> class.
+        /// </summary>
+        /// <param name="repository">The repository.</param>
         public TreeController( ITreeRepository repository )
         {
             _repository = repository;
         }
 
+        /// <summary>
+        /// Gets the trees by viewport.
+        /// </summary>
+        /// <param name="viewport">The viewport.</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetTreesAsync( [FromQuery] MapViewportVm viewport )    
         {

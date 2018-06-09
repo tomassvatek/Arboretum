@@ -23,6 +23,7 @@ namespace Arboretum.Core.Models.Locations
             SouthEast = new LatLng( latitudeMax, longitudeMin );
         }
 
+
         ///// <summary>
         ///// Initializes a new instance of the <see cref="MapViewport"/> class.
         ///// </summary>
