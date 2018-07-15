@@ -5,8 +5,8 @@ using Newtonsoft.Json;
 
 namespace Arboretum.Core.Extensions
 {
-    public static class StringExtensions
-    {
+    public static class StringExtension
+    {   
         public static List<Tree> DeserializeTree( this string json )
         {
             try

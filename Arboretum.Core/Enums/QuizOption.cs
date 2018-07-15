@@ -1,5 +1,5 @@
 ﻿public enum QuizOption
 {
-    SHORT = 5,
-    LONG = 10
+    Short = 5,
+    Long = 10   
 };

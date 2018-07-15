@@ -1,4 +1,4 @@
-﻿using Arboretum.Core.Models.Locations;
+﻿using Arboretum.Core.Modules.Locations;
 using Newtonsoft.Json;
 
 namespace Arboretum.Core.Models.Entities

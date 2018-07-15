@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Arboretum.Core.Models.Locations
+namespace Arboretum.Core.Modules.Locations
 {
     public class LatLng
     {

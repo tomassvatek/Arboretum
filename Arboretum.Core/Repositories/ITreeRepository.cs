@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Arboretum.Core.Models.Entities;
-using Arboretum.Core.Models.Locations;
+using Arboretum.Core.Modules.Locations;
 
 namespace Arboretum.Core.Repositories
 {

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Arboretum.Core.Models.Entities;
-using Arboretum.Core.Models.Locations;
+﻿using Arboretum.Core.Models.Entities;
+using Arboretum.Core.Modules.Locations;
 using Arboretum.Core.WebServices;
 using Arboretum.Core.WebServices.Providers;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Arboretum.Core.Repositories
 {
@@ -26,14 +25,15 @@ namespace Arboretum.Core.Repositories
             return trees;
         }
 
-        public Tree GetTrees(QuizOption option, IMapViewport viewport)
+        public Tree GetTrees( QuizOption option, IMapViewport viewport )
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException( );
         }
 
-        public Tree GetTreeById(int id)
+        public Tree GetTreeById( int id )
         {
-            throw new NotImplementedException();
+            return new Tree( ) { SpeciesCommonName = "Lípa" };
+            //throw new NotImplementedException();
         }
     }
 }

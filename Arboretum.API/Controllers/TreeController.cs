@@ -1,7 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Arboretum.API.Viewmodels;
-using Arboretum.Core.Models.Locations;
 using Arboretum.Core.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,29 +27,30 @@ namespace Arboretum.API.Controllers
         /// </summary>
         /// <param name="viewport">The viewport.</param>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> GetTreesAsync([FromQuery] MapViewportVm viewport)
-        {
-            MapViewport mapViewport = new MapViewport(viewport.LatitudeMin, viewport.LatitudeMax, viewport.LongitudeMin, viewport.LongitudeMax);
-            var trees = await _repository.GetTrees(mapViewport);
-            if (trees == null)
-            {
-                return BadRequest();
-            }
-            var vm = trees.Select(e => new TreeInfoWindowVm
-            {
-                Id = e.Id,
-                SpeciesCommonName = e.SpeciesCommonName
-            }).ToList();
+        //[HttpGet]
+        //public async Task<IActionResult> GetTreesAsync([FromQuery] MapViewportVm viewport)
+        //{
+        //    MapViewport mapViewport = new MapViewport(viewport.LatitudeMin, viewport.LatitudeMax, viewport.LongitudeMin, viewport.LongitudeMax);
+        //    var trees = await _repository.GetTrees(mapViewport);
+        //    if (trees == null)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    var vm = trees.Select(e => new TreeInfoWindowVm
+        //    {
+        //        Id = e.Id,
+        //        SpeciesCommonName = e.SpeciesCommonName
+        //    }).ToList();
 
-            return Ok(vm);
-        }
+        //    return Ok(vm);
+        //}
 
 
-        [HttpGet]
-        public IActionResult GetTrees(QuizOption option, [FromQuery] MapViewport viewport)
-        {
-        }
+        //[HttpGet]
+        //public IActionResult GetTrees(QuizOption option, [FromQuery] MapViewport viewport)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         [HttpGet]
         public IActionResult GetTree(int id)
