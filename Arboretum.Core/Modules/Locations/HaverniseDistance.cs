@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Arboretum.Core.Extensions;
-using Arboretum.Core.Models.Entities;
+using Arboretum.Core.Models;
 
 namespace Arboretum.Core.Modules.Locations
 {
@@ -28,7 +28,7 @@ namespace Arboretum.Core.Modules.Locations
 
             foreach (var item in _results)
             {
-                item.Distance = Calculate(current.Latitude, current.Longitude, item.Tree.LatLng.Latitude, item.Tree.LatLng.Longitude);
+                //item.Distance = Calculate(current.Latitude, current.Longitude, item.Tree.LatLng.Latitude, item.Tree.LatLng.Longitude);
             }
 
             Sort();

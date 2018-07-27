@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arboretum.Core", "Arboretum.Core\Arboretum.Core.csproj", "{0F4E8065-412C-4623-A053-48E1FE5AF885}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arboretum.Core", "Arboretum.Core\Arboretum.Core.csproj", "{0F4E8065-412C-4623-A053-48E1FE5AF885}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arboretum.API", "Arboretum.API\Arboretum.API.csproj", "{7EBE9619-2DED-44FF-B456-21555F5C295C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arboretum.API", "Arboretum.API\Arboretum.API.csproj", "{7EBE9619-2DED-44FF-B456-21555F5C295C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTest", "ConsoleTest\ConsoleTest.csproj", "{86274546-5358-4A78-A436-3E086799E3C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{7EBE9619-2DED-44FF-B456-21555F5C295C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EBE9619-2DED-44FF-B456-21555F5C295C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EBE9619-2DED-44FF-B456-21555F5C295C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86274546-5358-4A78-A436-3E086799E3C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86274546-5358-4A78-A436-3E086799E3C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86274546-5358-4A78-A436-3E086799E3C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86274546-5358-4A78-A436-3E086799E3C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,7 +1,7 @@
 ﻿
 namespace Arboretum.API.Viewmodels
 {
-    public class TreeInfoWindowVm   
+    public class TreeInfoWindowViewModel   
     {
         public int Id { get; set; }
         public string SpeciesCommonName { get; set; }

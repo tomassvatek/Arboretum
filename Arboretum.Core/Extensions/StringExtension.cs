@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Arboretum.Core.Models.Entities;
+using Arboretum.Core.Models;
 using Newtonsoft.Json;
 
 namespace Arboretum.Core.Extensions

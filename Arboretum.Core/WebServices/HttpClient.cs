@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Arboretum.Core.Extensions;
-using Arboretum.Core.Models.Entities;
+using Arboretum.Core.Models;
 using Arboretum.Core.WebServices.Providers;
 
 namespace Arboretum.Core.WebServices

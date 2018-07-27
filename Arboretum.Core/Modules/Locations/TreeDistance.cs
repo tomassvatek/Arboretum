@@ -1,5 +1,4 @@
 ﻿using Arboretum.Core.Models;
-using Arboretum.Core.Models.Entities;
 
 namespace Arboretum.Core.Modules.Locations
 {

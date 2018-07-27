@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Arboretum.API.Viewmodels
 {
-    public class MapViewportVm
+    public class MapViewportViewModel
     {
         // Latitude of bottom left corner
         public double LatitudeMin { get; set; }
