@@ -8,7 +8,7 @@ namespace Arboretum.Core.Repositories
 {
     public class TreeRepository : Repository<Tree>, ITreeRepository
     {
-        public TreeRepository(ArboretumContext context) : base(context)
+        public TreeRepository( ArboretumContext context ) : base( context )
         {
 
         }

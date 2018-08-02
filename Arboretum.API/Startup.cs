@@ -26,8 +26,8 @@ namespace Arboretum.API
             services.AddMvc( );
 
             // Add application services
-            services.AddTransient<ITreeService, TreeService>();
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<ITreeService, TreeService>( );
+            services.AddTransient<IUnitOfWork, UnitOfWork>( );
 
 
 

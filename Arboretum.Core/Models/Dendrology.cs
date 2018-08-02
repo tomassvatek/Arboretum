@@ -5,9 +5,9 @@ namespace Arboretum.Core.Models
 {
     public partial class Dendrology : IDendrology
     {
-        public Dendrology()
+        public Dendrology( )
         {
-            Tree = new HashSet<Tree>();
+            Tree = new HashSet<Tree>( );
         }
 
         public int Id { get; set; }

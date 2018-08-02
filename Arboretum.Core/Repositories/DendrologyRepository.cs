@@ -4,7 +4,7 @@ namespace Arboretum.Core.Repositories
 {
     public class DendrologyRepository : Repository<Dendrology>, IDendrologyRepository
     {
-        public DendrologyRepository(ArboretumContext context) : base(context)
+        public DendrologyRepository( ArboretumContext context ) : base( context )
         {
 
         }

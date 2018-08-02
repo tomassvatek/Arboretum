@@ -6,6 +6,6 @@ namespace Arboretum.Core.Repositories
     {
         ITreeRepository Trees { get; set; }
         IDendrologyRepository Dendrologies { get; set; }
-        int SaveChanges();
+        int SaveChanges( );
     }
 }

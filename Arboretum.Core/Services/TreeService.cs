@@ -10,13 +10,13 @@ namespace Arboretum.Core.Services
 {
     public class TreeService : ITreeService
     {
-        private IUnitOfWork _unitOfWork;
-        private RestService _restService;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly RestService _restService;
 
         public TreeService( )
         {
-            _unitOfWork = new UnitOfWork(new ArboretumContext());
-            _restService = new RestService();
+            _unitOfWork = new UnitOfWork( new ArboretumContext( ) );
+            _restService = new RestService( );
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Arboretum.Core.Services
         {
             var trees = _unitOfWork.Trees.GetAll();
 
-            if (trees != null)
+            if ( trees != null )
             {
                 return null;
             }
@@ -48,11 +48,11 @@ namespace Arboretum.Core.Services
             return trees;
         }
 
-        public IEnumerable<Tree> GetTrees()
+        public IEnumerable<Tree> GetTrees( )
         {
             var trees = _unitOfWork.Trees.GetAll();
 
-            if (trees == null)
+            if ( trees == null )
             {
                 return null;
             }
@@ -68,12 +68,12 @@ namespace Arboretum.Core.Services
         /// <param name="currentLocation">The current location.</param>
         /// <param name="count">The count.</param>
         /// <returns></returns>
-        public Tree GetTrees( IMapViewport viewport, LatLng currentLocation, int count )
+        public Tree GetTrees( IMapViewport viewport, LatLng currentLocation, int count = 5 )
         {
             var treesViewport = GetTrees(viewport);
             List<Tree> trees = new List<Tree>(treesViewport);
 
-            if( trees != null )
+            if ( trees != null )
             {
                 int length = trees.Count;
                 GeolocationResult[] geolocationResult = new GeolocationResult[length];

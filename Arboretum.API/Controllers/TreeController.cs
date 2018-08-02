@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Arboretum.API.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/Tree")]
+    [Produces( "application/json" )]
+    [Route( "api/Tree" )]
     public class TreeController : ControllerBase
     {
         private readonly ITreeService _service;
@@ -17,7 +17,7 @@ namespace Arboretum.API.Controllers
         /// Initializes a new instance of the <see cref="TreeController"/> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
-        public TreeController(ITreeService service)
+        public TreeController( ITreeService service )
         {
             _service = service;
         }
@@ -27,10 +27,10 @@ namespace Arboretum.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult GetTrees()
+        public IActionResult GetTrees( )
         {
             var trees = _service.GetTrees();
-            return Ok(trees);
+            return Ok( trees );
         }
 
 
@@ -41,16 +41,16 @@ namespace Arboretum.API.Controllers
         //}
 
         [HttpGet]
-        public IActionResult GetTree(int id)
+        public IActionResult GetTree( int id )
         {
             var tree = _service.GetTreeById(id);
 
-            if(tree == null)
+            if ( tree == null )
             {
-                return NotFound();
+                return NotFound( );
             }
 
-            return Ok(tree);
+            return Ok( tree );
         }
     }
 }

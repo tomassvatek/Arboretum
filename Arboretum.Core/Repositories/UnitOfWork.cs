@@ -6,24 +6,24 @@ namespace Arboretum.Core.Repositories
     {
         private readonly ArboretumContext _context;
 
-        public UnitOfWork(ArboretumContext context)
+        public UnitOfWork( ArboretumContext context )
         {
             _context = context;
-            Trees = new TreeRepository(_context);
-            Dendrologies = new DendrologyRepository(_context);
+            Trees = new TreeRepository( _context );
+            Dendrologies = new DendrologyRepository( _context );
         }
 
         public ITreeRepository Trees { get; set; }
         public IDendrologyRepository Dendrologies { get; set; }
 
-        public int SaveChanges()
+        public int SaveChanges( )
         {
-            return _context.SaveChanges();
+            return _context.SaveChanges( );
         }
 
-        public void Dispose()
+        public void Dispose( )
         {
-            _context.Dispose();
+            _context.Dispose( );
         }
     }
 }
