@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Arboretum.Core.Repositories;
+using Arboretum.Core.Services;
 using Arboretum.Core.WebServices.Providers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,8 +26,9 @@ namespace Arboretum.API
             services.AddMvc( );
 
             // Add application services
-            services.AddTransient<ITreeRepository, TreeRepository>();
-            services.AddTransient<IDataProvider, SPKProvider>( );
+            services.AddTransient<ITreeService, TreeService>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+
 
 
             // Configure Swagger

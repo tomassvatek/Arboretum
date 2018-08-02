@@ -44,7 +44,7 @@ namespace Arboretum.Core.Modules.Locations
             _results = _results.OrderBy(t => t.Distance).ToList();
         }
 
-        private double Calculate(double lat1, double lon1, double lat2, double lon2)
+        private double Calculate( double lat1, double lon1, double lat2, double lon2 )
         {
             var r = 6372.8;
             var dLat = lat2 - lat1;

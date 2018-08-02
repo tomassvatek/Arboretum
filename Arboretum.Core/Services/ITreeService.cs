@@ -6,10 +6,10 @@ using System.Text;
 
 namespace Arboretum.Core.Services
 {
-    interface ITreeService
+    public interface ITreeService
     {
-        IEnumerable<Tree> GetTrees();
-        Tree GetTrees(QuizOption option, IMapViewport viewport);
-        Tree GetTreeById(int id);
+        IEnumerable<Tree> GetTrees( );
+        Tree GetTrees( IMapViewport viewport, LatLng currentLocation, int count );
+        Tree GetTreeById( int id );
     }
 }

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Arboretum.Core.Models.Interfaces;
 using System.Collections.Generic;
 
 namespace Arboretum.Core.Models
 {
-    public partial class Dendrology
+    public partial class Dendrology : IDendrology
     {
         public Dendrology()
         {

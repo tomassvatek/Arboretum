@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Arboretum.Core.Models.Interfaces;
 
 namespace Arboretum.Core.Models
 {
-    public partial class Tree
+    public partial class Tree : ITree, IGeolocation
     {
         public int Id { get; set; }
         public int? Age { get; set; }
