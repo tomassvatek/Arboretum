@@ -1,18 +1,19 @@
-﻿using Arboretum.Core.Locations;
-using Newtonsoft.Json;
+﻿using Arboretum.Core.Models.Interfaces;
 
 namespace Arboretum.Core.Models
 {
-    public class Tree
+    public partial class Tree : ITree, IGeolocation
     {
         public int Id { get; set; }
-        [JsonProperty( "species_scientific_name" )]
-        public string SpeciesScientificName { get; set; }
-        [JsonProperty( "species_common_name" )]
-        public string SpeciesCommonName { get; set; }
-        [JsonProperty( "coordinates" )]
-        public LatLng LatLng { get; set; }
-        public string About { get; set; }
-        public byte[] Image { get; set; }
+        public int? Age { get; set; }
+        public double? Height { get; set; }
+        public double? CrownSize { get; set; }
+        public double? TrunkSize { get; set; }
+        public string Note { get; set; }
+        public int DendrologyId { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+
+        public Dendrology Dendrology { get; set; }
     }
 }

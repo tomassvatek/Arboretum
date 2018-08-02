@@ -1,6 +1,6 @@
 ﻿using Arboretum.Core.Models;
 
-namespace Arboretum.Core.Locations
+namespace Arboretum.Core.Modules.Locations
 {
     public class TreeDistance
     {
