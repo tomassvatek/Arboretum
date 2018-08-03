@@ -1,12 +1,13 @@
-﻿
+﻿using Arboretum.Core.Models.Interfaces;
+
 namespace Arboretum.Core.Modules.Locations
 {
     public class MapViewport : IMapViewport
     {
-        public LatLng NorthWest { get; set; }
-        public LatLng NorthEast { get; set; }
-        public LatLng SouthEast { get; set; }
-        public LatLng SouthWest { get; set; }
+        public LatLng TopLeft { get; set; }
+        public LatLng TopRight { get; set; }
+        public LatLng BottomRight { get; set; }
+        public LatLng BottomLeft { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MapViewport"/> class.
@@ -17,35 +18,26 @@ namespace Arboretum.Core.Modules.Locations
         /// <param name="longitudeMax">The longitude of top right corner.</param>
         public MapViewport( double latitudeMin, double latitudeMax, double longitudeMin, double longitudeMax )
         {
-            NorthEast = new LatLng( latitudeMax, longitudeMax );
-            SouthWest = new LatLng( latitudeMin, longitudeMin );
-            NorthWest = new LatLng( latitudeMin, longitudeMax );
-            SouthEast = new LatLng( latitudeMax, longitudeMin );
+            TopRight = new LatLng( latitudeMax, longitudeMax );
+            BottomLeft = new LatLng( latitudeMin, longitudeMin );
+            TopLeft = new LatLng( latitudeMin, longitudeMax );
+            BottomRight = new LatLng( latitudeMax, longitudeMin );
         }
 
+        public MapViewport( )
+        {
 
-        ///// <summary>
-        ///// Initializes a new instance of the <see cref="MapViewport"/> class.
-        ///// </summary>
-        ///// <param name="northEast">The top right corner.</param>
-        ///// <param name="southWest">The bottom left corner.</param>
-        //public MapViewport( LatLng northEast, LatLng southWest)
-        //{
-        //    NorthEast = northEast;
-        //    SouthWest = southWest;
-        //    NorthWest.Latitude = southWest.Latitude;
-        //    NorthWest.Longitude = northEast.Longitude;
-        //    SouthEast.Latitude = northEast.Latitude;
-        //    SouthEast.Longitude = southWest.Longitude;
+        }
 
-        //}
-
-        //public MapViewport(LatLng northWest, LatLng northEast, LatLng southEast, LatLng southWest )
-        //{
-        //    NorthWest = northWest;
-        //    NorthEast = northEast;
-        //    SouthEast = southEast;
-        //    SouthWest = southWest;
-        //}
+        /// <summary>
+        /// Includes the specified geolocation.
+        /// </summary>
+        /// <param name="geolocation">The geolocation.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public bool Include( IGeolocation geolocation )
+        {
+            return ((TopLeft.Latitude < geolocation.Latitude && BottomRight.Latitude > geolocation.Latitude) && (TopLeft.Longitude < geolocation.Longitude && BottomRight.Longitude > geolocation.Longitude));
+        }
     }
 }

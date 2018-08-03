@@ -9,7 +9,9 @@ namespace Arboretum.Core.Services
     public interface ITreeService
     {
         IEnumerable<Tree> GetTrees( );
+        IEnumerable<Tree> GetTrees( IMapViewport mapViewport );
+
         Tree GetTrees( IMapViewport viewport, LatLng currentLocation, int count );
-        Tree GetTreeById( int id );
+        Tree GetTree( int id );
     }
 }

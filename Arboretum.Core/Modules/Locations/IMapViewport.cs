@@ -1,4 +1,6 @@
 ﻿
+using Arboretum.Core.Models.Interfaces;
+
 namespace Arboretum.Core.Modules.Locations
 {
     /// <summary>
@@ -7,13 +9,17 @@ namespace Arboretum.Core.Modules.Locations
     /// </summary>
     public interface IMapViewport
     {
-        // Top left corner
-        LatLng NorthWest { get; set; }
-        // Top right corner
-        LatLng NorthEast { get; set; }
-        // Bottom right corner
-        LatLng SouthEast { get; set; }
-        // Bottom left corner
-        LatLng SouthWest { get; set; }
+        LatLng TopLeft { get; set; }
+        LatLng TopRight { get; set; }
+        LatLng BottomRight { get; set; }
+        LatLng BottomLeft { get; set; }
+
+        /// <summary>
+        /// Includes the specified geolocation.
+        /// </summary>
+        /// <param name="geolocation">The geolocation.</param>
+        /// <returns></returns>
+        bool Include( IGeolocation geolocation );
     }
 }
+    

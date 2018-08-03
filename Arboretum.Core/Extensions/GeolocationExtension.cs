@@ -29,6 +29,12 @@ namespace Arboretum.Core.Extensions
             var c = 2 * Math.Asin(Math.Sqrt(a));
             return r * 2 * Math.Asin( Math.Sqrt( a ) ) / 1000;
         }
+
+
+        //public static bool IsGeolocationInRegion( this IGeolocation geolocation, IMapViewport viewport )
+        //{
+        //    return true;
+        //}
     }
 
     public class GeolocationDataTable
