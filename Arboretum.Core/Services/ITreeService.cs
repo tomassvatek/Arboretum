@@ -10,7 +10,7 @@ namespace Arboretum.Core.Services
     public interface ITreeService
     {
         Task<IEnumerable<Tree>> GetTreesAsync( IMapViewport mapViewport );
-        Task<Tree> GetTreesAsync( IMapViewport viewport, LatLng currentLocation, int count );
+        Task<IEnumerable<Tree>> GetTreesAsync( IMapViewport viewport, LatLng currentLocation, int count );
         Tree GetTree( int id );
         Dendrology GetDendrology( int id );
     }

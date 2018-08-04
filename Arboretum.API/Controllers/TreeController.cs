@@ -21,7 +21,7 @@ namespace Arboretum.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetTrees( IMapViewport viewport )
+        public async Task<IActionResult> Trees ( IMapViewport viewport )
         {
             var trees = await _service.GetTreesAsync( new MapViewport());
             var vm = new List<TreeMapViewModel>( );
@@ -36,7 +36,7 @@ namespace Arboretum.API.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> GetTrees( IMapViewport viewport, LatLng latLng, int count )
+        public async Task<IActionResult> Trees( IMapViewport viewport, LatLng latLng, int count )   
         {
             // testing purpose
             var trees = _service.GetTreesAsync( new MapViewport(), new LatLng(), 5);
@@ -49,8 +49,8 @@ namespace Arboretum.API.Controllers
             return Ok( trees );
         }
 
-        [HttpGet]
-        public IActionResult GetTree( int id )
+        [HttpGet]   
+        public IActionResult Trees( int id ) 
         {
             var tree = _service.GetTree( id );
 
@@ -62,7 +62,7 @@ namespace Arboretum.API.Controllers
             return Ok( tree );
         }
 
-        [HttpPut]
+        [HttpPost]
         public IActionResult Add( TreeDto tree )
         {
             return NotFound( );

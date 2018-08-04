@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Arboretum.Core.Repositories;
+using Arboretum.Core.Repositories.Intefaces;
 using Arboretum.Core.Services;
 using Arboretum.Core.WebServices.Providers;
 using Microsoft.AspNetCore.Builder;

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Arboretum.Core.Extensions;
 using Arboretum.Core.Models;
@@ -18,16 +19,6 @@ namespace Arboretum.Core.Services
         {
             _unitOfWork = new UnitOfWork( new ArboretumContext( ) );
             _restService = new RestService( );
-        }
-
-        /// <summary>
-        /// Gets the tree by identifier.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns></returns>
-        public Tree GetTree( int id )
-        {
-            return _unitOfWork.Trees.Get( id );
         }
 
         /// <summary>
@@ -70,7 +61,7 @@ namespace Arboretum.Core.Services
         /// <param name="currentLocation">The current location.</param>
         /// <param name="count">The count.</param>
         /// <returns></returns>
-        public async Task<Tree> GetTreesAsync( IMapViewport viewport, LatLng currentLocation, int count = 5 )
+        public async Task<IEnumerable<Tree>> GetTreesAsync( IMapViewport viewport, LatLng currentLocation, int count = 5 )
         {
             var treesViewport = await GetTreesAsync( viewport );
             var trees = new List<Tree>( treesViewport );
@@ -78,16 +69,32 @@ namespace Arboretum.Core.Services
             if ( trees != null )
             {
                 int length = trees.Count;
-                GeolocationResult[] geolocationResult = new GeolocationResult[length];
+                GeolocationDataTable dataTable = new GeolocationDataTable( );
 
-                for ( int i = 0; i < trees.Count; i++ )
+                foreach ( var tree in trees )
                 {
-                    geolocationResult[i].Geolocation = trees[i];
-                    geolocationResult[i].Distance = trees[i].CalculateGeolocationDistance( currentLocation );
+                    dataTable.Items.Add( new GeolocationResult( )
+                    {
+                        Geolocation = tree,
+                        Distance = tree.CalculateGeolocationDistance( currentLocation )
+                    } );
+                }
+
+                dataTable.Items.Sort( );
+                trees.Clear( );
+
+                foreach ( var item in dataTable.Items )
+                {
+                    trees.Add( (Tree)item.Geolocation );
                 }
             }
 
-            return null;
+            return trees;
+        }
+
+        public Tree GetTree( int id )
+        {
+            return _unitOfWork.Trees.Get( id );
         }
 
         public Dendrology GetDendrology( int id )

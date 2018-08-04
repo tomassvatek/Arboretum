@@ -29,22 +29,22 @@ namespace Arboretum.Core.Extensions
             var c = 2 * Math.Asin(Math.Sqrt(a));
             return r * 2 * Math.Asin( Math.Sqrt( a ) ) / 1000;
         }
-
-
-        //public static bool IsGeolocationInRegion( this IGeolocation geolocation, IMapViewport viewport )
-        //{
-        //    return true;
-        //}
     }
 
     public class GeolocationDataTable
     {
-        public List<GeolocationResult> DataTable { get; set; } = new List<GeolocationResult>( );
+        public List<GeolocationResult> Items { get; set; } = new List<GeolocationResult>( );
     }
 
-    public class GeolocationResult
+    public class GeolocationResult : IComparable<GeolocationResult>
     {
-        public double Distance { get; set; }
         public IGeolocation Geolocation { get; set; }
+        public double Distance { get; set; }
+
+
+        public int CompareTo( GeolocationResult other )
+        {
+            return this.Distance.CompareTo( other );
+        }
     }
 }
