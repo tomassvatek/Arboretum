@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Arboretum.Core.Repositories
+namespace Arboretum.Core.Repositories.Intefaces
 {
     public interface IUnitOfWork : IDisposable
     {

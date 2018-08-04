@@ -1,5 +1,6 @@
 ﻿using Arboretum.Core.Models;
 using Arboretum.Core.Modules.Locations;
+using Arboretum.Core.Repositories.Intefaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

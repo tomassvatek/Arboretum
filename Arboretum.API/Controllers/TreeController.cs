@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Arboretum.API.ViewModels;
 using Arboretum.Core.Modules.Locations;
 using Arboretum.Core.Services;
+using Arboretum.Core.WebServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Arboretum.API.Controllers
@@ -12,23 +14,16 @@ namespace Arboretum.API.Controllers
     {
         private readonly ITreeService _service;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TreeController"/> class.
-        /// </summary>
-        /// <param name="repository">The repository.</param>
+
         public TreeController( ITreeService service )
         {
             _service = service;
         }
 
-        /// <summary>
-        /// Gets the trees by viewport.
-        /// </summary>
-        /// <returns></returns>
         [HttpGet]
-        public IActionResult GetTrees( )
+        public async Task<IActionResult> GetTrees( IMapViewport viewport )
         {
-            var trees = _service.GetTrees( new MapViewport());
+            var trees = await _service.GetTreesAsync( new MapViewport());
             var vm = new List<TreeMapViewModel>( );
 
             foreach ( var tree in trees )
@@ -40,23 +35,43 @@ namespace Arboretum.API.Controllers
         }
 
 
-        //[HttpGet]
-        //public IActionResult GetTrees(QuizOption option, [FromQuery] MapViewport viewport)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        [HttpGet]
+        public async Task<IActionResult> GetTrees( IMapViewport viewport, LatLng latLng, int count )
+        {
+            // testing purpose
+            var trees = _service.GetTreesAsync( new MapViewport(), new LatLng(), 5);
 
-        //[HttpGet]
-        //public IActionResult GetTree( int id )
-        //{
-        //    var tree = _service.GetTree(id);
+            if ( trees == null )
+            {
+                return NotFound( );
+            }
 
-        //    if ( tree == null )
-        //    {
-        //        return NotFound( );
-        //    }
+            return Ok( trees );
+        }
 
-        //    return Ok( tree );
-        //}
+        [HttpGet]
+        public IActionResult GetTree( int id )
+        {
+            var tree = _service.GetTree( id );
+
+            if ( tree == null )
+            {
+                return NotFound( );
+            }
+
+            return Ok( tree );
+        }
+
+        [HttpPut]
+        public IActionResult Add( TreeDto tree )
+        {
+            return NotFound( );
+        }
+
+        [HttpPut]
+        public IActionResult Edit( TreeDto tree )
+        {
+            return NotFound( );
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Arboretum.Core.Models;
+using Arboretum.Core.WebServices;
 using Newtonsoft.Json;
 
 namespace Arboretum.Core.Extensions
@@ -11,9 +12,28 @@ namespace Arboretum.Core.Extensions
         {
             try
             {
-                var trees = JsonConvert.DeserializeObject<List<Tree>>( json );
+                var dto = JsonConvert.DeserializeObject<List<TreeDto>>( json );
+                var trees = new List<Tree>();
+
+                if ( trees != null )
+                {
+                    foreach ( var item in dto )
+                    {
+                        var tree = new Tree()
+                        {
+                            Id = item.Id,
+                            Latitude = item.Latitude,
+                            Longitude = item.Longitude,
+                            Dendrology = new Dendrology(item.CommonName, item.ScientificName)
+                        };
+
+                        trees.Add( tree );
+                    }
+                }
+
                 return trees;
             }
+
             catch ( Exception )
             {
                 return null;

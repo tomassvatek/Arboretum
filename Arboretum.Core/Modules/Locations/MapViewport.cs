@@ -19,14 +19,17 @@ namespace Arboretum.Core.Modules.Locations
         public MapViewport( double latitudeMin, double latitudeMax, double longitudeMin, double longitudeMax )
         {
             TopRight = new LatLng( latitudeMax, longitudeMax );
-            BottomLeft = new LatLng( latitudeMin, longitudeMin );
             TopLeft = new LatLng( latitudeMin, longitudeMax );
+            BottomLeft = new LatLng( latitudeMin, longitudeMin );
             BottomRight = new LatLng( latitudeMax, longitudeMin );
         }
 
         public MapViewport( )
         {
-
+            TopRight = new LatLng( );
+            TopLeft = new LatLng( );
+            BottomLeft = new LatLng( );
+            BottomRight = new LatLng( );
         }
 
         /// <summary>

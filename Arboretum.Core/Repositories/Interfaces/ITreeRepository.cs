@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Arboretum.Core.Models;
 using Arboretum.Core.Modules.Locations;
 
-namespace Arboretum.Core.Repositories
+namespace Arboretum.Core.Repositories.Intefaces
 {
     public interface ITreeRepository : IRepository<Tree>
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Arboretum.Core.Repositories
+namespace Arboretum.Core.Repositories.Intefaces
 {
     public interface IRepository<TEntity> where TEntity : class
     {

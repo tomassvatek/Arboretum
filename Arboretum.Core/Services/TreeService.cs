@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Arboretum.Core.Extensions;
 using Arboretum.Core.Models;
 using Arboretum.Core.Modules.Locations;
 using Arboretum.Core.Repositories;
+using Arboretum.Core.Repositories.Intefaces;
 using Arboretum.Core.WebServices;
 
 namespace Arboretum.Core.Services
@@ -33,7 +35,7 @@ namespace Arboretum.Core.Services
         /// </summary>
         /// <param name="mapViewport">The map viewport.</param>
         /// <returns></returns>
-        public IEnumerable<Tree> GetTrees( IMapViewport mapViewport )
+        public async Task<IEnumerable<Tree>> GetTreesAsync( IMapViewport mapViewport )
         {
             var trees = new List<Tree>( );
             var db = _unitOfWork.Trees.GetAll( );
@@ -50,22 +52,11 @@ namespace Arboretum.Core.Services
                 }
             }
 
-            // load tree from SPK
+            var rest = await _restService.ReadManyAsync( );
 
-            return trees;
-        }
-
-        /// <summary>
-        /// Gets the trees.
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Tree> GetTrees( )
-        {
-            var trees = _unitOfWork.Trees.GetAll();
-
-            if ( trees == null )
+            foreach ( var item in rest )
             {
-                return null;
+                trees.Add( item );
             }
 
             return trees;
@@ -79,10 +70,10 @@ namespace Arboretum.Core.Services
         /// <param name="currentLocation">The current location.</param>
         /// <param name="count">The count.</param>
         /// <returns></returns>
-        public Tree GetTrees( IMapViewport viewport, LatLng currentLocation, int count = 5 )
+        public async Task<Tree> GetTreesAsync( IMapViewport viewport, LatLng currentLocation, int count = 5 )
         {
-            var treesViewport = GetTrees(viewport);
-            var trees = new List<Tree>(treesViewport);
+            var treesViewport = await GetTreesAsync( viewport );
+            var trees = new List<Tree>( treesViewport );
 
             if ( trees != null )
             {
@@ -99,7 +90,7 @@ namespace Arboretum.Core.Services
             return null;
         }
 
-        private Dendrology GetDendrology( int id )
+        public Dendrology GetDendrology( int id )
         {
             return _unitOfWork.Dendrologies.Get( id );
         }

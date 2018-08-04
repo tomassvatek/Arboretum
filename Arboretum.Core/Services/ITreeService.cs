@@ -3,15 +3,15 @@ using Arboretum.Core.Modules.Locations;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Arboretum.Core.Services
 {
     public interface ITreeService
     {
-        IEnumerable<Tree> GetTrees( );
-        IEnumerable<Tree> GetTrees( IMapViewport mapViewport );
-
-        Tree GetTrees( IMapViewport viewport, LatLng currentLocation, int count );
+        Task<IEnumerable<Tree>> GetTreesAsync( IMapViewport mapViewport );
+        Task<Tree> GetTreesAsync( IMapViewport viewport, LatLng currentLocation, int count );
         Tree GetTree( int id );
+        Dendrology GetDendrology( int id );
     }
 }

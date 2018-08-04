@@ -19,9 +19,9 @@ namespace Arboretum.Core.WebServices
             _httpClient.DefaultRequestHeaders.Add("User-Agent", "arboretum-client-api-consumer-98ebdf2f-6e82-4638-8a4c-24a13cca786e");
         }
 
-        public async Task<List<Tree>> ReadManyAsync()
+        public async Task<List<Tree>> ReadManyAsync( )
         {
-            HttpResponseMessage response = await _httpClient.GetAsync("?lat_min=50.10090883137793&lat_max=50.10090883137793&lon_min=14.451601214953257&lon_max=14.451601214953257");
+            HttpResponseMessage response = await _httpClient.GetAsync("?lat_min=49.800843428884626&lat_max=49.800943428884626&lon_min=12.627895086511217&lon_max=12.629895086511217");
             var content = response.Content;
             string json = await content.ReadAsStringAsync();
             return json.DeserializeTree();

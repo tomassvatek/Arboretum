@@ -1,27 +1,20 @@
 ﻿using Arboretum.Core.Models;
 using Arboretum.Core.Repositories;
 using Arboretum.Core.Services;
+using Arboretum.Core.WebServices;
 using System;
+using System.Threading.Tasks;
 
 namespace ConsoleTest
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main( string[] args )
         {
-            ArboretumContext ctx = new ArboretumContext();
+            RestService rest = new RestService();
+            rest.ReadManyAsync( ).Wait();
 
-            using(UnitOfWork unitOfWork = new UnitOfWork(ctx))
-            {
-                TreeService service = new TreeService(unitOfWork);
-                var trees = service.GetTrees();
-                foreach (var tree in trees)
-                {
-                    Console.WriteLine(tree.Id);
-                }
-            }
-
-            Console.ReadKey();
+            Console.ReadKey( );
         }
     }
 }
