@@ -89,7 +89,7 @@ namespace Arboretum.Core.Services
                 }
             }
 
-            return trees;
+            return trees.Take( count );
         }
 
         public Tree GetTree( int id )
