@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Arboretum.API.ViewModels;
-using Arboretum.Core.Modules.Locations;
+using Arboretum.Core.Helpers.Locations;
+using Arboretum.Core.Helpers.Locations.Interfaces;
+using Arboretum.Core.Models;
 using Arboretum.Core.Services;
-using Arboretum.Core.WebServices;
+using Arboretum.Core.Services.Interfaces;
+using Arboretum.Core.Services.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Arboretum.API.Controllers
@@ -64,10 +67,22 @@ namespace Arboretum.API.Controllers
 
 
         [HttpPost]
-        public IActionResult Create( [FromBody] TreeDto tree )
+        public IActionResult Create( [FromBody] TreeDto dto )
         {
-            return NotFound( );
+            if ( ModelState.IsValid )
+            {
+                var tree = new Tree()
+                {
+                    Age = dto.Age,
+                    CrownSize = dto.CrownSize,
+                    
+                };
 
+                var result = _service.Create( tree );
+                return Ok( );
+            }
+
+            return NotFound( );
         }
 
         [HttpPut( "{id}" )]

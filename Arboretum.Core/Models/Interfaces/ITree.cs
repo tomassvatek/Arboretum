@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Arboretum.Core.Models.Interfaces
 {
-    public interface ITree : INote
+    public interface ITree : IGeolocation, INote
     {
         int Id { get; set; }
         int? Age { get; set; }

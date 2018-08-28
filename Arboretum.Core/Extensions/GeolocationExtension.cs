@@ -1,5 +1,5 @@
-﻿using Arboretum.Core.Models.Interfaces;
-using Arboretum.Core.Modules.Locations;
+﻿using Arboretum.Core.Helpers.Locations;
+using Arboretum.Core.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 

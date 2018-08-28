@@ -1,6 +1,7 @@
-﻿using Arboretum.Core.Models.Interfaces;
+﻿using Arboretum.Core.Helpers.Locations.Interfaces;
+using Arboretum.Core.Models.Interfaces;
 
-namespace Arboretum.Core.Modules.Locations
+namespace Arboretum.Core.Helpers.Locations  
 {
     public class MapViewport : IMapViewport
     {

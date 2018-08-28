@@ -1,7 +1,7 @@
 ﻿
 using Arboretum.Core.Models.Interfaces;
 
-namespace Arboretum.Core.Modules.Locations
+namespace Arboretum.Core.Helpers.Locations.Interfaces
 {
     /// <summary>
     /// The inteface represents a visibile region. 

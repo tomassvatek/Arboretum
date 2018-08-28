@@ -1,8 +1,8 @@
 ﻿using Arboretum.Core.Enums;
 using Arboretum.Core.Extensions;
 using Arboretum.Core.Helpers.DataProviders.Interfaces;
+using Arboretum.Core.Helpers.Locations.Interfaces;
 using Arboretum.Core.Models;
-using Arboretum.Core.Modules.Locations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;

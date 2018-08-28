@@ -2,7 +2,7 @@
 using Arboretum.Core.Repositories;
 using Arboretum.Core.Repositories.Intefaces;
 using Arboretum.Core.Services;
-using Arboretum.Core.WebServices.Providers;
+using Arboretum.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

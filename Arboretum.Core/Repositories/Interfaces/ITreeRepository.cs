@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Arboretum.Core.Models;
 using Arboretum.Core.Models.Interfaces;
-using Arboretum.Core.Modules.Locations;
 
 namespace Arboretum.Core.Repositories.Intefaces
 {

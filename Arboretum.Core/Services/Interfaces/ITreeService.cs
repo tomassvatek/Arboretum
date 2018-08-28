@@ -1,10 +1,10 @@
-﻿using Arboretum.Core.Models;
-using Arboretum.Core.Models.Interfaces;
-using Arboretum.Core.Modules.Locations;
+﻿using Arboretum.Core.Helpers.Locations;
+using Arboretum.Core.Helpers.Locations.Interfaces;
+using Arboretum.Core.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Arboretum.Core.Services
+namespace Arboretum.Core.Services.Interfaces
 {
     public interface ITreeService
     {

@@ -1,7 +1,7 @@
 ﻿using Arboretum.Core.Models.Interfaces;
 using Newtonsoft.Json;
 
-namespace Arboretum.Core.WebServices
+namespace Arboretum.Core.Services.Models
 {
     public class TreeDto : ITree, IDendrology, IGeolocation
     {

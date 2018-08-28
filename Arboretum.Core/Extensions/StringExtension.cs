@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Arboretum.Core.Helpers.DataProviders;
 using Arboretum.Core.Models;
-using Arboretum.Core.WebServices;
+using Arboretum.Core.Services.Models;
 using Newtonsoft.Json;
 
 namespace Arboretum.Core.Extensions

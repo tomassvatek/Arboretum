@@ -1,4 +1,4 @@
-﻿namespace Arboretum.Core.Helpers
+﻿namespace Arboretum.Core.Helpers.DataProviders
 {
     public class RequestHeaders
     {

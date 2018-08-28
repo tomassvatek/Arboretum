@@ -2,7 +2,7 @@
 
 namespace Arboretum.Core.Models
 {
-    public partial class Tree : ITree, IGeolocation
+    public partial class Tree : ITree
     {
         public int Id { get; set; }
         public int? Age { get; set; }

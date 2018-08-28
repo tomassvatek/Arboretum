@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Arboretum.Core.Extensions;
+using Arboretum.Core.Helpers.Locations;
+using Arboretum.Core.Helpers.Locations.Interfaces;
 using Arboretum.Core.Models;
-using Arboretum.Core.Models.Interfaces;
-using Arboretum.Core.Modules.Locations;
 using Arboretum.Core.Repositories;
 using Arboretum.Core.Repositories.Intefaces;
+using Arboretum.Core.Services.Interfaces;
 
 namespace Arboretum.Core.Services
 {
@@ -107,11 +108,6 @@ namespace Arboretum.Core.Services
 
         public bool Create( Tree tree )
         {
-            if ( tree == null )
-            {
-                return false;
-            }
-
             try
             {
                 _unitOfWork.Trees.Add( tree );
