@@ -4,43 +4,42 @@ namespace Arboretum.Core.Modules.Locations
 {
     public class MapViewport : IMapViewport
     {
-        public LatLng TopLeft { get; set; }
-        public LatLng TopRight { get; set; }
-        public LatLng BottomRight { get; set; }
-        public LatLng BottomLeft { get; set; }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MapViewport"/> class.
+        /// </summary>
+        /// <param name="latitudeMin">The latitude minimum.</param>
+        /// <param name="latitudeMax">The latitude maximum.</param>
+        /// <param name="longitudeMin">The longitude minimum.</param>
+        /// <param name="longitudeMax">The longitude maximum.</param>
+        public MapViewport( double latitudeMin, double latitudeMax, double longitudeMin, double longitudeMax )
+        {
+            this.LatitudeMin = latitudeMin;
+            this.LatitudeMax = latitudeMax;
+            this.LongitudeMin = longitudeMin;
+            this.LongitudeMax = longitudeMax;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MapViewport"/> class.
         /// </summary>
-        /// <param name="latitudeMin">The latitude of bottom left corner.</param>
-        /// <param name="latitudeMax">The latitude of top right corner.</param>
-        /// <param name="longitudeMin">The longitude of bottom left corner.</param>
-        /// <param name="longitudeMax">The longitude of top right corner.</param>
-        public MapViewport( double latitudeMin, double latitudeMax, double longitudeMin, double longitudeMax )
-        {
-            TopRight = new LatLng( latitudeMax, longitudeMax );
-            TopLeft = new LatLng( latitudeMin, longitudeMax );
-            BottomLeft = new LatLng( latitudeMin, longitudeMin );
-            BottomRight = new LatLng( latitudeMax, longitudeMin );
-        }
-
         public MapViewport( )
         {
-            TopRight = new LatLng( );
-            TopLeft = new LatLng( );
-            BottomLeft = new LatLng( );
-            BottomRight = new LatLng( );
         }
+
+        public double LatitudeMin { get; set; }
+        public double LatitudeMax { get; set; }
+        public double LongitudeMin { get; set; }
+        public double LongitudeMax { get; set; }
+
 
         /// <summary>
         /// Includes the specified geolocation.
         /// </summary>
         /// <param name="geolocation">The geolocation.</param>
         /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         public bool Include( IGeolocation geolocation )
         {
-            return ((TopLeft.Latitude < geolocation.Latitude && BottomRight.Latitude > geolocation.Latitude) && (TopLeft.Longitude < geolocation.Longitude && BottomRight.Longitude > geolocation.Longitude));
+            return ((this.LatitudeMin < geolocation.Latitude && this.LatitudeMax > geolocation.Latitude) && (this.LongitudeMin < geolocation.Longitude && this.LongitudeMax > geolocation.Longitude));
         }
     }
 }

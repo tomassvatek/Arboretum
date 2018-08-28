@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Arboretum.Core.Extensions;
 using Arboretum.Core.Models;
+using Arboretum.Core.Models.Interfaces;
 using Arboretum.Core.Modules.Locations;
 using Arboretum.Core.Repositories;
 using Arboretum.Core.Repositories.Intefaces;
-using Arboretum.Core.WebServices;
 
 namespace Arboretum.Core.Services
 {
@@ -26,7 +27,7 @@ namespace Arboretum.Core.Services
         /// </summary>
         /// <param name="mapViewport">The map viewport.</param>
         /// <returns></returns>
-        public async Task<IEnumerable<Tree>> GetTreesAsync( IMapViewport mapViewport )
+        public async Task<IEnumerable<Tree>> GetTreesAsync( IMapViewport viewport )
         {
             var trees = new List<Tree>( );
             var db = _unitOfWork.Trees.GetAll( );
@@ -35,7 +36,7 @@ namespace Arboretum.Core.Services
             {
                 foreach ( var item in db )
                 {
-                    if ( mapViewport.Include( item ) )
+                    if ( viewport.Include( item ) )
                     {
                         item.Dendrology = GetDendrology( item.DendrologyId );
                         trees.Add( item );
@@ -43,11 +44,13 @@ namespace Arboretum.Core.Services
                 }
             }
 
-            var rest = await _restService.ReadManyAsync( );
-
-            foreach ( var item in rest )
+            var rest = await _restService.ReadManyAsync( viewport );
+            if ( rest != null )
             {
-                trees.Add( item );
+                foreach ( var item in rest )
+                {
+                    trees.Add( item );
+                }
             }
 
             return trees;
@@ -100,6 +103,30 @@ namespace Arboretum.Core.Services
         public Dendrology GetDendrology( int id )
         {
             return _unitOfWork.Dendrologies.Get( id );
+        }
+
+        public bool Create( Tree tree )
+        {
+            if ( tree == null )
+            {
+                return false;
+            }
+
+            try
+            {
+                _unitOfWork.Trees.Add( tree );
+                _unitOfWork.SaveChanges( );
+                return true;
+            }
+            catch ( Exception )
+            {
+                return false;
+            }
+        }
+
+        public bool Edit( int id, Tree tree )
+        {
+            throw new System.NotImplementedException( );
         }
     }
 }

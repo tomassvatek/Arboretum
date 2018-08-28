@@ -1,8 +1,8 @@
-﻿using Arboretum.Core.Models;
-using Arboretum.Core.Repositories;
-using Arboretum.Core.Services;
-using Arboretum.Core.WebServices;
+﻿using Arboretum.Core.Helpers.DataProviders;
+using Arboretum.Core.Models;
+using Arboretum.Core.Modules.Locations;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ConsoleTest
@@ -11,10 +11,16 @@ namespace ConsoleTest
     {
         static void Main( string[] args )
         {
-            RestService rest = new RestService();
-            rest.ReadManyAsync( ).Wait();
+            IMapViewport viewport = new MapViewport(49.795380, 49.797345, 12.633100, 12.634210 );
+            var providers = RestDataProviderHandler.GetProviders( );
+
+            foreach ( var item in providers )
+            {
+                var content = item.FetchDataAsync( viewport );
+            }
 
             Console.ReadKey( );
         }
+
     }
 }

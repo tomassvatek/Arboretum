@@ -9,10 +9,10 @@ namespace Arboretum.Core.Modules.Locations
     /// </summary>
     public interface IMapViewport
     {
-        LatLng TopLeft { get; set; }
-        LatLng TopRight { get; set; }
-        LatLng BottomRight { get; set; }
-        LatLng BottomLeft { get; set; }
+        double LatitudeMin { get; set; }
+        double LatitudeMax { get; set; }
+        double LongitudeMin { get; set; }
+        double LongitudeMax { get; set; }
 
         /// <summary>
         /// Includes the specified geolocation.
@@ -22,4 +22,3 @@ namespace Arboretum.Core.Modules.Locations
         bool Include( IGeolocation geolocation );
     }
 }
-    

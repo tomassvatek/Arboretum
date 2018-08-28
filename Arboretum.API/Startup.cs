@@ -31,7 +31,6 @@ namespace Arboretum.API
             services.AddTransient<IUnitOfWork, UnitOfWork>( );
 
 
-
             // Configure Swagger
             services.AddSwaggerGen( c =>
             {
@@ -39,7 +38,7 @@ namespace Arboretum.API
                 {
                     Title = "Arboretum API",
                     Version = "v1",
-                    Contact = new Contact( ) { Name = "Tomáš Svatek", Email = "virtualarboretum@gmail.com" }
+                    Contact = new Contact( ) { Name = "developer", Email = "virtualarboretum@gmail.com" }
                 } );
 
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
@@ -51,6 +50,7 @@ namespace Arboretum.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure( IApplicationBuilder app, IHostingEnvironment env )
         {
+
             if ( env.IsDevelopment( ) )
             {
                 app.UseDeveloperExceptionPage( );
@@ -64,6 +64,7 @@ namespace Arboretum.API
             } );
 
             app.UseMvc( );
+        
         }
     }
 }

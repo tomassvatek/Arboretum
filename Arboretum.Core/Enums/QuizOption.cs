@@ -1,5 +1,10 @@
-﻿public enum QuizOption
+﻿namespace Arboretum.Core.Enums
 {
-    Short = 5,
-    Long = 10
-};
+
+    public enum QuizOption
+    {
+        Short = 5,
+        Long = 10
+    };
+
+}

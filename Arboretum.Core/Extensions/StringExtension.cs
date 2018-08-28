@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Arboretum.Core.Helpers.DataProviders;
 using Arboretum.Core.Models;
 using Arboretum.Core.WebServices;
 using Newtonsoft.Json;
@@ -8,7 +9,7 @@ namespace Arboretum.Core.Extensions
 {
     public static class StringExtension
     {
-        public static List<Tree> DeserializeTree( this string json )
+        public static List<Tree> DeserializeTrees( this string json )
         {
             try
             {
@@ -32,6 +33,19 @@ namespace Arboretum.Core.Extensions
                 }
 
                 return trees;
+            }
+
+            catch ( Exception )
+            {
+                return null;
+            }
+        }
+
+        public static List<RestDataProvider> DeserializeProviders( this string json )
+        {
+            try
+            {
+                return JsonConvert.DeserializeObject<List<RestDataProvider>>( json );
             }
 
             catch ( Exception )

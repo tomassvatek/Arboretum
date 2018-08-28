@@ -1,8 +1,15 @@
-﻿{
-  "providers": {
-    "provider": {
-      "providerName": "SPK"
-    }
+﻿//{
+//  "RestDataProviders":
+[
+  {
+    "Name": "SPK",
+    "BaseAddress": "https://www.stromypodkontrolou.cz/client_api/v1/trees",
+    "RequestHeaders": [
+      {
+        "Name": "User-Agent",
+        "Value": "arboretum-client-api-consumer-98ebdf2f-6e82-4638-8a4c-24a13cca786e"
+      }
+    ]
   }
-}
-
+]
+//}

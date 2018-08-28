@@ -9,19 +9,32 @@ using Microsoft.AspNetCore.Mvc;
 namespace Arboretum.API.Controllers
 {
     [Produces( "application/json" )]
-    [Route( "api/Tree" )]
-    public class TreeController : ControllerBase
+    [Route( "api/[controller]" )]
+    public class TreesController : ControllerBase
     {
         private readonly ITreeService _service;
 
 
-        public TreeController( ITreeService service )
+        public TreesController( ITreeService service )
         {
             _service = service;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Trees ( IMapViewport viewport )
+        [HttpGet( "{id}" )]
+        public IActionResult GetTree( int id )
+        {
+            var tree = _service.GetTree( id );
+
+            if ( tree == null )
+            {
+                return NotFound( );
+            }
+
+            return Ok( tree );
+        }
+
+        [HttpGet( "Trees" )]
+        public async Task<IActionResult> GetTreesByViewport( IMapViewport viewport )
         {
             var trees = await _service.GetTreesAsync( new MapViewport());
             var vm = new List<TreeMapViewModel>( );
@@ -35,8 +48,8 @@ namespace Arboretum.API.Controllers
         }
 
 
-        [HttpGet]
-        public async Task<IActionResult> Trees( IMapViewport viewport, LatLng latLng, int count )   
+        [HttpGet( "TreesQuiz" )]
+        public async Task<IActionResult> GetTreesQuiz( IMapViewport viewport, LatLng currentLocation, int count )
         {
             // testing purpose
             var trees = _service.GetTreesAsync( new MapViewport(), new LatLng(), 5);
@@ -49,27 +62,16 @@ namespace Arboretum.API.Controllers
             return Ok( trees );
         }
 
-        [HttpGet]   
-        public IActionResult Trees( int id ) 
-        {
-            var tree = _service.GetTree( id );
-
-            if ( tree == null )
-            {
-                return NotFound( );
-            }
-
-            return Ok( tree );
-        }
 
         [HttpPost]
-        public IActionResult Add( TreeDto tree )
+        public IActionResult Create( [FromBody] TreeDto tree )
         {
             return NotFound( );
+
         }
 
-        [HttpPut]
-        public IActionResult Edit( TreeDto tree )
+        [HttpPut( "{id}" )]
+        public IActionResult Edit( int id, TreeDto tree )
         {
             return NotFound( );
         }
