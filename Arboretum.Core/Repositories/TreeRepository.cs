@@ -1,4 +1,5 @@
-﻿using Arboretum.Core.Models;
+﻿using Arboretum.Core.Entities;
+using Arboretum.Core.Models;
 using Arboretum.Core.Repositories.Intefaces;
 using System;
 using System.Collections.Generic;

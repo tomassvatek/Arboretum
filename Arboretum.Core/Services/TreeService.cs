@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Arboretum.Core.Entities;
 using Arboretum.Core.Extensions;
 using Arboretum.Core.Helpers.Locations;
 using Arboretum.Core.Helpers.Locations.Interfaces;
@@ -23,11 +24,7 @@ namespace Arboretum.Core.Services
             _restService = new RestService( );
         }
 
-        /// <summary>
-        /// Gets the trees.
-        /// </summary>
-        /// <param name="mapViewport">The map viewport.</param>
-        /// <returns></returns>
+
         public async Task<IEnumerable<Tree>> GetTreesAsync( IMapViewport viewport )
         {
             var trees = new List<Tree>( );
@@ -58,13 +55,6 @@ namespace Arboretum.Core.Services
         }
 
 
-        /// <summary>
-        /// Gets the trees.
-        /// </summary>
-        /// <param name="viewport">The viewport.</param>
-        /// <param name="currentLocation">The current location.</param>
-        /// <param name="count">The count.</param>
-        /// <returns></returns>
         public async Task<IEnumerable<Tree>> GetTreesAsync( IMapViewport viewport, LatLng currentLocation, int count = 5 )
         {
             var treesViewport = await GetTreesAsync( viewport );

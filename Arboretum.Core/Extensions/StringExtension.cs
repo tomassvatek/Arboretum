@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Arboretum.Core.Entities;
 using Arboretum.Core.Helpers.DataProviders;
 using Arboretum.Core.Models;
 using Arboretum.Core.Services.Models;

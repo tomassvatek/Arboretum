@@ -1,5 +1,5 @@
-﻿using Arboretum.Core.Helpers.Locations.Interfaces;
-using Arboretum.Core.Models.Interfaces;
+﻿using Arboretum.Core.Entities.Interfaces;
+using Arboretum.Core.Helpers.Locations.Interfaces;
 
 namespace Arboretum.Core.Helpers.Locations  
 {

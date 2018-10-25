@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Arboretum.Core.Models.Interfaces
+namespace Arboretum.Core.Entities.Interfaces
 {
     public interface IGeolocation
     {

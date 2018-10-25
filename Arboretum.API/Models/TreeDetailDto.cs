@@ -1,9 +1,8 @@
-﻿using Arboretum.Core.Entities.Interfaces;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace Arboretum.Core.Services.Models
+namespace Arboretum.API.Models
 {
-    public class TreeDto
+    public class TreeDetailDto
     {
         public int Id { get; set; }
 

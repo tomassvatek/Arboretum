@@ -1,9 +1,9 @@
-﻿using Arboretum.Core.Entities.Interfaces;
+﻿using Arboretum.WebService.Interfaces;
 using Newtonsoft.Json;
 
-namespace Arboretum.Core.Services.Models
+namespace Arboretum.WebService.Providers.SPK
 {
-    public class TreeDto
+    public class TreeDto : ITreeDataModel
     {
         public int Id { get; set; }
 

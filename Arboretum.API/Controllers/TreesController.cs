@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Arboretum.API.Models;
 using Arboretum.API.ViewModels;
 using Arboretum.Core.Helpers.Locations;
 using Arboretum.Core.Helpers.Locations.Interfaces;
-using Arboretum.Core.Models;
-using Arboretum.Core.Services;
 using Arboretum.Core.Services.Interfaces;
-using Arboretum.Core.Services.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Arboretum.API.Controllers
@@ -17,12 +15,20 @@ namespace Arboretum.API.Controllers
     {
         private readonly ITreeService _service;
 
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TreesController"/> class.
+        /// </summary>
+        /// <param name="service">The service.</param>
         public TreesController( ITreeService service )
         {
             _service = service;
         }
 
+        /// <summary>
+        /// Gets the tree.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpGet( "{id}" )]
         public IActionResult GetTree( int id )
         {
@@ -37,17 +43,60 @@ namespace Arboretum.API.Controllers
         }
 
         [HttpGet( "Trees" )]
-        public async Task<IActionResult> GetTreesByViewport( IMapViewport viewport )
+        public async Task<IActionResult> GetTreesByViewport( )
         {
-            var trees = await _service.GetTreesAsync( new MapViewport());
-            var vm = new List<TreeMapViewModel>( );
+            //var trees = await _service.GetTreesAsync( new MapViewport());
+            //var vm = new List<TreeMapViewModel>( );
 
-            foreach ( var tree in trees )
-            {
-                vm.Add( new TreeMapViewModel( tree.Id, tree.Dendrology.CommonName ) );
-            }
+            //foreach ( var tree in trees )
+            //{
+            //    vm.Add( new TreeMapViewModel( tree.Id, tree.Dendrology.CommonName ) );
+            //}
 
-            return Ok( vm );
+            //return Ok( vm );
+                var list = new List<MarkerDto>()
+                {
+                    new MarkerDto()
+                    {
+                        Id = 10,
+                        Latitude = 37.78825,
+                        Longitude = -122.4324,
+                        Title = "Lípa"
+                    },
+                    new MarkerDto()
+                    {
+                        Id = 10,
+                        Latitude = 37.78825,
+                        Longitude = -122.4324,
+                        Title = "Lípa"
+                    },
+
+                    new MarkerDto()
+                    {
+                        Id = 10,
+                        Latitude = 37.78825,
+                        Longitude = -122.4324,
+                        Title = "Lípa"
+                    },
+
+                    new MarkerDto()
+                    {
+                        Id = 10,
+                        Latitude = 37.78825,
+                        Longitude = -122.4324,
+                        Title = "Lípa"
+                    },
+
+                    new MarkerDto()
+                    {
+                        Id = 10,
+                        Latitude = 37.78825,
+                        Longitude = -122.4324,
+                        Title = "Lípa"
+                    }
+                };
+
+            return Ok( list );
         }
 
 
@@ -67,18 +116,10 @@ namespace Arboretum.API.Controllers
 
 
         [HttpPost]
-        public IActionResult Create( [FromBody] TreeDto dto )
+        public IActionResult Create( [FromBody] AddTreeDto dto )
         {
             if ( ModelState.IsValid )
             {
-                var tree = new Tree()
-                {
-                    Age = dto.Age,
-                    CrownSize = dto.CrownSize,
-                    
-                };
-
-                var result = _service.Create( tree );
                 return Ok( );
             }
 
@@ -86,7 +127,7 @@ namespace Arboretum.API.Controllers
         }
 
         [HttpPut( "{id}" )]
-        public IActionResult Edit( int id, TreeDto tree )
+        public IActionResult Edit( int id, [FromBody] EditTreeDto tree )
         {
             return NotFound( );
         }

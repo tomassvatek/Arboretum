@@ -1,10 +1,9 @@
-﻿
-using Arboretum.Core.Models.Interfaces;
+﻿using Arboretum.Core.Entities.Interfaces;
 
 namespace Arboretum.Core.Helpers.Locations.Interfaces
 {
     /// <summary>
-    /// The inteface represents a visibile region. 
+    /// The interface represents a visible region. 
     /// The map viewport depends on user's current location.
     /// </summary>
     public interface IMapViewport

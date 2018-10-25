@@ -1,4 +1,5 @@
-﻿using Arboretum.Core.Models;
+﻿using Arboretum.Core.Entities;
+using Arboretum.Core.Models;
 
 namespace Arboretum.Core.Repositories.Intefaces
 {

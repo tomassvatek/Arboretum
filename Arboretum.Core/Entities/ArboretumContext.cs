@@ -1,4 +1,5 @@
 ﻿using System;
+using Arboretum.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 

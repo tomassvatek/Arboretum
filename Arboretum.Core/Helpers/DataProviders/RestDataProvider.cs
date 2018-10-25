@@ -1,4 +1,5 @@
-﻿using Arboretum.Core.Enums;
+﻿using Arboretum.Core.Entities;
+using Arboretum.Core.Enums;
 using Arboretum.Core.Extensions;
 using Arboretum.Core.Helpers.DataProviders.Interfaces;
 using Arboretum.Core.Helpers.Locations.Interfaces;

@@ -1,4 +1,5 @@
-﻿using Arboretum.Core.Helpers.Locations.Interfaces;
+﻿using Arboretum.Core.Entities;
+using Arboretum.Core.Helpers.Locations.Interfaces;
 using Arboretum.Core.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;

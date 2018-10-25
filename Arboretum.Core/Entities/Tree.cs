@@ -1,8 +1,9 @@
-﻿using Arboretum.Core.Models.Interfaces;
+﻿
+using Arboretum.Core.Entities.Interfaces;
 
-namespace Arboretum.Core.Models
+namespace Arboretum.Core.Entities
 {
-    public partial class Tree : ITree
+    public partial class Tree : ITree   
     {
         public int Id { get; set; }
         public int? Age { get; set; }

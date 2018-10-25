@@ -1,4 +1,5 @@
 ﻿using Arboretum.API.Helpers.Converters.Interfaces;
+using Arboretum.Core.Entities;
 using Arboretum.Core.Models;
 using Arboretum.Core.Services.Models;
 using System;
