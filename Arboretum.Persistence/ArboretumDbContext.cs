@@ -6,13 +6,13 @@ namespace Arboretum.Persistence
 {
     public class ArboretumDbContext : DbContext
     {
-        public ArboretumDbContext( DbContextOptions options ) : base( options )
+        public ArboretumDbContext( DbContextOptions<ArboretumDbContext> options ) : base( options )
         {
 
         }
 
-        public virtual DbSet<Dendrology> Dendrology { get; set; }
-        public virtual DbSet<Tree> Tree { get; set; }
+        public virtual DbSet<Dendrology> Dendrologies { get; set; } 
+        public virtual DbSet<Tree> Trees { get; set; }
 
         protected override void OnModelCreating( ModelBuilder modelBuilder )
         {

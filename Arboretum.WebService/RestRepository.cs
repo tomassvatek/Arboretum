@@ -1,28 +1,33 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Arboretum.AppCore.Models;
+using Arboretum.AppCore.Models.Interfaces;
 using Arboretum.AppCore.Repositories;
-using Arboretum.WebService.Interfaces;
+using Arboretum.WebService.HttpClient;
+using Arboretum.WebService.Providers.Interfaces;
 using Arboretum.WebService.Providers.SPK;
 
 namespace Arboretum.WebService
 {
     public class RestRepository : IRestRepository
     {
-        private List<ITreeProvider> _treeProviders = new List<ITreeProvider>();
+        private readonly List<ITreeDataProvider> _treeProviders;
+        private readonly IHttpClient _httpClient;
 
-        public RestRepository( )
+        public RestRepository( IHttpClient httpClient )
         {
+            _httpClient = httpClient;
+            _treeProviders = new List<ITreeDataProvider>( );
             RegisterProviders( );
         }
 
-        public IList<Tree> GetTrees( IMapViewport mapViewport )
+        public async Task<IList<Tree>> GetTreesAsync( IRegion region )
         {
             var trees = new List<Tree>();
-            trees.Clear( );
 
             foreach ( var treeProvider in _treeProviders )
             {
-                trees = treeProvider.GetTrees( mapViewport );
+                trees.AddRange( await treeProvider.GetTreesAsync( region ) );
             }
 
             return trees;
@@ -30,7 +35,7 @@ namespace Arboretum.WebService
 
         private void RegisterProviders( )
         {
-            _treeProviders.Add( new SPK( ) );
+            _treeProviders.Add( new SPK( _httpClient ) );
         }
     }
 }

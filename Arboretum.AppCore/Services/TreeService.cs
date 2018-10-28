@@ -1,16 +1,18 @@
 ﻿using System.Collections.Generic;
 using Arboretum.AppCore.Models;
+using Arboretum.AppCore.Models.Interfaces;
+using Arboretum.AppCore.Repositories;
 
 namespace Arboretum.AppCore.Services
 {
     public class TreeService : ITreeService
     {
-        public IList<Tree> GetTrees(IMapViewport mapViewport)
+        public IList<Tree> GetTrees( IRegion mapViewport )
         {
             throw new System.NotImplementedException();
         }
 
-        public IList<Tree> GetTrees(IMapViewport viewport, double latitude, double longitude, int count)
+        public IList<Tree> GetTrees( IRegion viewport, double latitude, double longitude, int count)
         {
             throw new System.NotImplementedException();
         }

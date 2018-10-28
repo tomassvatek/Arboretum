@@ -10,5 +10,6 @@
         public double? CrownSize { get; set; }
         public double? TrunkSize { get; set; }
         public string Note { get; set; }
+        public bool IsEditable { get; set; }    
     }
 }

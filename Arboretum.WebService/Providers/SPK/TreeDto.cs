@@ -1,4 +1,4 @@
-﻿using Arboretum.WebService.Interfaces;
+﻿using Arboretum.WebService.Providers.Interfaces;
 using Newtonsoft.Json;
 
 namespace Arboretum.WebService.Providers.SPK
@@ -25,9 +25,14 @@ namespace Arboretum.WebService.Providers.SPK
 
         public string About { get; set; }
 
+        [JsonProperty( "coordinates" )]
+        public Coordinates Coordinates { get; set; }    
+    }
+
+    public class Coordinates
+    {
         [JsonProperty( PropertyName = "lat" )]
         public double Latitude { get; set; }
-
         [JsonProperty( PropertyName = "lon" )]
         public double Longitude { get; set; }
     }

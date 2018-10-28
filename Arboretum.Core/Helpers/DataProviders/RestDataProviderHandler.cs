@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Arboretum.Core.Helpers.DataProviders
 {
-    public class RestDataProviderHandler
+    public static class RestDataProviderHandler
     {
         /// <summary>
         /// Gets the providers.
@@ -20,11 +20,7 @@ namespace Arboretum.Core.Helpers.DataProviders
             }
         }
 
-        /// <summary>
-        /// Gets the provider.
-        /// </summary>
-        /// <param name="providerName">Name of the provider.</param>
-        /// <returns></returns>
+    
         public static RestDataProvider GetProvider( ProviderName providerName )
         {
             var providers = GetProviders( );

@@ -1,18 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Arboretum.AppCore.Models;
+using Arboretum.AppCore.Models.Interfaces;
+using Arboretum.AppCore.Repositories;
 
 namespace Arboretum.AppCore.Services
 {
     public interface ITreeService
     {
-        IList<Tree> GetTrees( IMapViewport mapViewport );
-        IList<Tree> GetTrees( IMapViewport viewport, double latitude, double longitude, int count );
+        Task<IList<Tree>> GetTreesAsync( IRegion mapViewport );
+        Task<IList<Tree>> GetTrees( IRegion viewport, double latitude, double longitude, int count );
         Tree GetTreeById( int id );
-        IList<Dendrology> GetDendrologies();
-        Dendrology GetDendrologyById( int id ); 
+        IList<Dendrology> GetDendrologies( );
+        Dendrology GetDendrologyById( int id );
         void CreateTree( Tree tree );
         void UpdateTree( int id, Tree tree );
-        void DeleteTree(int id);
+        void DeleteTree( int id );
     }
 }
