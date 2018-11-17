@@ -1,50 +1,192 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Arboretum.AppCore.Models;
 using Arboretum.AppCore.Models.Interfaces;
 using Arboretum.AppCore.Repositories;
+using Arboretum.Common.Enums;
+using Arboretum.Common.Geolocation;
+using Arboretum.Common.ServiceResults;
 
 namespace Arboretum.AppCore.Services
 {
     public class TreeService : ITreeService
     {
-        public IList<Tree> GetTrees( IRegion mapViewport )
+        private readonly ITreeRepository _treeRepository;
+        private readonly IRestRepository _restRepository;
+
+        public TreeService(ITreeRepository treeRepository, IRestRepository restRepository)
         {
-            throw new System.NotImplementedException();
+            _treeRepository = treeRepository;
+            _restRepository = restRepository;
         }
 
-        public IList<Tree> GetTrees( IRegion viewport, double latitude, double longitude, int count)
+        public async Task<ServiceResult<List<Tree>>> GetTreesAsync(IRegion region)
         {
-            throw new System.NotImplementedException();
+            var result = new ServiceResult<List<Tree>>();
+            try
+            {
+                var trees = new List<Tree>();
+
+                var repositoryResult = _treeRepository.GetTrees(region);
+                if (repositoryResult != null)
+                {
+                    trees.AddRange(repositoryResult);
+                }
+
+                var restResult = await _restRepository.GetTreesAsync(region);
+                if (restResult != null)
+                {
+                    trees.AddRange(restResult);
+                }
+
+                result.Data = trees;
+                return result;
+            }
+            catch (Exception exception)
+            {
+                result.AddViolation(exception);
+                return result;
+            }
         }
 
-        public Tree GetTreeById(int id)
+        public async Task<ServiceResult<List<Tree>>> GetClosestTreesAsync(IRegion region, double latitude, double longitude, int count)
         {
-            throw new System.NotImplementedException();
+            var result = new ServiceResult<List<Tree>>();
+
+            if (count <= 0)
+            {
+                result.AddViolation("Count must be bigger than 0.");
+                return result;
+            }
+
+            try
+            {
+                var treesServiceResult = await GetTreesAsync(region);
+
+                var geolocationDistanceTable = new GeolocationDistanceTable<Tree>();
+                var geolocationResults = geolocationDistanceTable.Calculate(treesServiceResult.Data, latitude, longitude);
+                var closestTrees = MapGeolocationResultsToDomainTrees(geolocationResults);
+
+                result.Data = closestTrees.Take(count).ToList();
+                return result;
+            }
+            catch (Exception exception)
+            {
+                result.AddViolation(exception);
+                return result;
+            }
         }
 
-        public IList<Dendrology> GetDendrologies()
+
+        public async Task<ServiceResult<Tree>> GetTreeById(int id, ProviderName providerName)
         {
-            throw new System.NotImplementedException();
+            if (providerName == ProviderName.ArboretumDb)
+            {
+                var repositoryResult = GetTreeByIdFromDb(id);
+                return repositoryResult;
+            }   
+
+            var restResult = await GetTreeByIdFromRest(id, providerName);
+            return restResult;  
         }
 
-        public Dendrology GetDendrologyById(int id)
+        public ServiceResult<Tree> CreateTree(Tree tree)
         {
-            throw new System.NotImplementedException();
+            var result = new ServiceResult<Tree>();
+
+            try
+            {
+                var createdTree = _treeRepository.CreateTree(tree);
+                result.Data = createdTree;
+                return result;
+            }
+            catch (Exception exception)
+            {
+                result.AddViolation(exception);
+                return result;
+            }
         }
 
-        public void CreateTree(Tree tree)
+        public ServiceResult UpdateTree(int id, Tree tree)
         {
-            throw new System.NotImplementedException();
+            var result = new ServiceResult();
+
+            if (tree.IsEditable)
+            {
+                result.AddViolation("This tree is not editable.");
+                return result;
+            }
+
+            try
+            {
+                _treeRepository.UpdateTree(id, tree);
+                return result;
+            }
+            catch (Exception exception)
+            {
+                result.AddViolation(exception);
+                return result;
+            }
         }
 
-        public void UpdateTree(int id, Tree tree)
+        private ServiceResult<Tree> GetTreeByIdFromDb(int id)
         {
-            throw new System.NotImplementedException();
+            var result = new ServiceResult<Tree>();
+
+            try
+            {
+                var tree = _treeRepository.GetTreeById(id);
+                if (tree == null)
+                {
+                    result.AddViolation("Tree does not exits");
+                    return result;
+                }
+
+                result.Data = tree;
+                return result;
+            }
+            catch (Exception exception)
+            {
+                result.AddViolation(exception);
+                return result;
+            }
+        }
+                
+        private async Task<ServiceResult<Tree>> GetTreeByIdFromRest(int id, ProviderName providerName)     
+        {
+            var result = new ServiceResult<Tree>();
+
+            try
+            {
+                var tree = await _restRepository.GetTreeByIdAsync(id, providerName);
+                if (tree == null)
+                {
+                    result.AddViolation("Tree does not exits");
+                    return result;
+                }
+
+                result.Data = tree;
+                return result;
+            }
+            catch (Exception exception)
+            {
+                result.AddViolation(exception);
+                return result;
+            }
         }
 
-        public void DeleteTree(int id)
+        private List<Tree> MapGeolocationResultsToDomainTrees(IList<GeolocationResult> geolocationResults)
         {
-            throw new System.NotImplementedException();
+            var domainTrees = new List<Tree>();
+
+            foreach (var result in geolocationResults)
+            {
+                domainTrees.Add((Tree)result.Geolocation);
+            }
+
+            return domainTrees;
         }
     }
 }

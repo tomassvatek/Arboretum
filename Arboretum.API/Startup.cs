@@ -1,10 +1,14 @@
-﻿using System.IO;
-using Arboretum.Core.Repositories;
-using Arboretum.Core.Repositories.Intefaces;
-using Arboretum.Core.Services;
-using Arboretum.Core.Services.Interfaces;
+﻿using System;
+using System.IO;
+using Arboretum.AppCore.Repositories;
+using Arboretum.AppCore.Services;
+using Arboretum.Infrastructure.Repositories;
+using Arboretum.Persistence;
+using Arboretum.WebService;
+using Arboretum.WebService.HttpClient;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
@@ -14,7 +18,7 @@ namespace Arboretum.API
 {
     public class Startup
     {
-        public Startup( IConfiguration configuration )
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
@@ -22,49 +26,86 @@ namespace Arboretum.API
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices( IServiceCollection services )
+        public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc( );
+            // Add Mvc framework
+            services.AddMvc();
 
-            // Add application services
-            services.AddTransient<ITreeService, TreeService>( );
-            services.AddTransient<IUnitOfWork, UnitOfWork>( );
-
+            // Add Arboretum configuration
+            ConfigureArboretum(services);
 
             // Configure Swagger
-            //services.AddSwaggerGen( c =>
-            //{
-            //    c.SwaggerDoc( "v1", new Info
-            //    {
-            //        Title = "Arboretum API",
-            //        Version = "v1",
-            //        Contact = new Contact( ) { Name = "developer", Email = "virtualarboretum@gmail.com" }
-            //    } );
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Title = "Arboretum client API",
+                    Version = "v1",
+                    Contact = new Contact() { Name = "developer", Email = "virtualarboretum@gmail.com" }
+                });
 
-            //    var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-            //    var xmlPath = Path.Combine( basePath, "Arboretum.API.xml" );
-            //    c.IncludeXmlComments( xmlPath );
-            //} );
+                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                var xmlPath = Path.Combine(basePath, "Arboretum.API.xml");
+                c.IncludeXmlComments(xmlPath);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure( IApplicationBuilder app, IHostingEnvironment env )
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-
-            if ( env.IsDevelopment( ) )
+            // Configure a developer environment 
+            if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage( );
-                app.UseDatabaseErrorPage( );
+                //app.UseDeveloperExceptionPage();
+                //app.UseDatabaseErrorPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Arboretum");
+                });
             }
 
-            //app.UseSwagger( );
-            //app.UseSwaggerUI( c =>
-            //{
-            //    c.SwaggerEndpoint( "/swagger/v1/swagger.json", "Arboretum API V1" );
-            //} );
+            app.UseDeveloperExceptionPage();
+            app.UseDatabaseErrorPage();
 
-            app.UseMvc( );
-        
+            app.UseMvc();
+        }
+
+        private void ConfigureArboretum(IServiceCollection services)
+        {
+            // Persistence configuration
+            //var connectionString = Configuration["ConnectionString"];
+            //services.AddDbContext<ArboretumDbContext>(
+            //    builder => builder.UseSqlServer(connectionString));
+
+            // Use SQL Database if in Azure, otherwise, use SQLite
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+            {
+                services.AddDbContext<ArboretumDbContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
+            }
+            else
+            {
+                var connectionString = Configuration["ConnectionString"];
+                services.AddDbContext<ArboretumDbContext>(
+                    builder => builder.UseSqlServer(connectionString));
+            }
+
+            // Automatically perform database migration
+            services.BuildServiceProvider().GetService<ArboretumDbContext>().Database.Migrate();
+
+
+            // AppCore services
+            services.AddTransient<ITreeService, TreeService>();
+            services.AddTransient<IDendrologyService, DendrologyService>();
+
+            // AppCore repositories
+            services.AddTransient<ITreeRepository, TreeRepository>();
+            services.AddTransient<IDendrologyRepository, DendrologyRepository>();
+            services.AddTransient<IRestRepository, RestRepository>();
+
+            // WebService services
+            services.AddTransient<IHttpClient, RestClient>();
         }
     }
 }

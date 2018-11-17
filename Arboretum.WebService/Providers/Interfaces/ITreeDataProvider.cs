@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Arboretum.AppCore.Models;
 using Arboretum.AppCore.Models.Interfaces;
-using Arboretum.AppCore.Repositories;
 using Arboretum.Common;
+using Arboretum.Common.Enums;
 
 namespace Arboretum.WebService.Providers.Interfaces
 {
@@ -14,6 +14,7 @@ namespace Arboretum.WebService.Providers.Interfaces
         string BaseAddress { get; }
         bool IsEditable { get; }
         IList<RequestHeaders> RequestHeaders { get; set; }
-        Task<IList<Tree>> GetTreesAsync( IRegion region );
+        Task<IList<Tree>> GetTreesAsync(IRegion region);
+        Task<Tree> GetTreeByIdAsync(int id);
     }
 }

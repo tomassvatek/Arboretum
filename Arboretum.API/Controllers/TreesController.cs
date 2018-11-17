@@ -1,134 +1,144 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Arboretum.API.config;
-using Arboretum.API.Models;
+﻿using System.Threading.Tasks;
+using Arboretum.AppCore.Models;
+using Arboretum.AppCore.Services;
+using Arboretum.API.Config;
 using Arboretum.API.ViewModels;
-using Arboretum.Core.Helpers.Locations;
-using Arboretum.Core.Helpers.Locations.Interfaces;
-using Arboretum.Core.Services.Interfaces;
+using Arboretum.Common.Enums;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace Arboretum.API.Controllers
 {
-    [Produces( "application/json" )]
-    [Route( RestRoute.ControllerRoute )]
+    [Produces("application/json")]
+    [Route(RestRoute.ControllerRoute)]
     public class TreesController : ControllerBase
     {
-        private readonly ITreeService _service;
+        private readonly ITreeService _treeService;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TreesController"/> class.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        public TreesController( ITreeService service )
+        public TreesController(ITreeService treeService)
         {
-            _service = service;
+            _treeService = treeService;
         }
 
+        /// <summary>
+        /// Gets the trees.
+        /// </summary>
+        /// <param name="visibleRegion">The visible region.</param>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetTreesByViewport( )
+        public async Task<IActionResult> GetTrees(VisibleRegionViewModel visibleRegion)
         {
-            //var trees = await _service.GetTreesAsync( new MapViewport());
-            //var vm = new List<TreeMapViewModel>( );
+            // TODO: Delete - Just for testing purpose
+            visibleRegion.LatitudeMax = 49.797345;
+            visibleRegion.LatitudeMin = 49.795380;
+            visibleRegion.LongitudeMax = 12.634210;
+            visibleRegion.LongitudeMin = 12.633100;
 
-            //foreach ( var tree in trees )
-            //{
-            //    vm.Add( new TreeMapViewModel( tree.Id, tree.Dendrology.CommonName ) );
-            //}
-
-            //return Ok( vm );
-            var list = new List<MarkerDto>()
+            var result = await _treeService.GetTreesAsync(visibleRegion);
+            if (result.HasViolations)
             {
-                new MarkerDto()
-                {
-                    Id = 10,
-                    Latitude = 37.78825,
-                    Longitude = -122.4324,
-                    Title = "Lípa"
-                },
-                new MarkerDto()
-                {
-                    Id = 10,
-                    Latitude = 37.78825,
-                    Longitude = -122.4324,
-                    Title = "Lípa"
-                },
+                return BadRequest(result.ToString());
+            }
 
-                new MarkerDto()
-                {
-                    Id = 10,
-                    Latitude = 37.78825,
-                    Longitude = -122.4324,
-                    Title = "Lípa"
-                },
+            var trees = result.Data;
 
-                new MarkerDto()
-                {
-                    Id = 10,
-                    Latitude = 37.78825,
-                    Longitude = -122.4324,
-                    Title = "Lípa"
-                },
+            return Ok(trees);
+        }
 
-                new MarkerDto()
-                {
-                    Id = 10,
-                    Latitude = 37.78825,
-                    Longitude = -122.4324,
-                    Title = "Lípa"
-                }
+        /// <summary>
+        /// Gets the closest trees.
+        /// </summary>
+        /// <param name="visibleRegion">The visible region.</param>
+        /// <param name="latitude">The latitude.</param>
+        /// <param name="longitude">The longitude.</param>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
+        [HttpGet(RestRoute.GetClosestTrees)]
+        public async Task<IActionResult> GetClosestTrees(VisibleRegionViewModel visibleRegion, double latitude,
+            double longitude, int count)
+        {
+            visibleRegion.LatitudeMax = 49.797345;
+            visibleRegion.LatitudeMin = 49.795380;
+            visibleRegion.LongitudeMax = 12.634210;
+            visibleRegion.LongitudeMin = 12.633100;
+
+            var result = await _treeService.GetClosestTreesAsync(visibleRegion, latitude, longitude, count);
+            if (result.HasViolations)
+            {
+                return BadRequest(result.ToString());
+            }
+
+            var closestTrees = result.Data;
+
+            return Ok(closestTrees);
+        }
+
+    
+        [HttpGet(RestRoute.GetTreeById)]
+        public async Task<IActionResult> GetTreeById(int treeId, ProviderName providerId)
+        {
+            var result = await _treeService.GetTreeById(treeId, providerId);
+            if (result.HasViolations)
+            {
+                return BadRequest(result.ToString());
+            }
+
+            var tree = result.Data;
+
+            return Ok(tree);
+        }
+
+        /// <summary>
+        /// Creates the tree.
+        /// </summary>
+        /// <param name="viewModel">The view model.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult CreateTree(CreateTreeViewModel viewModel)
+        {
+            var domainTree = new Tree()
+            {
+                Note = viewModel.Note, Latitude = viewModel.Latitude, Longitude = viewModel.Longitude,
+                Dendrology = new Dendrology() {Id = viewModel.DendrologyId}
             };
 
-            return Ok( list );
-        }
-
-        [HttpGet( RestRoute.GetNumberTrees )]
-        public async Task<IActionResult> GetCountTrees( IMapViewport viewport, LatLng currentLocation, int count )  
-        {
-            // testing purpose
-            var trees = _service.GetTreesAsync( new MapViewport(), new LatLng(), 5);
-
-            if ( trees == null )
+            var result = _treeService.CreateTree(domainTree);
+            if (result.HasViolations)
             {
-                return NotFound( );
+                return BadRequest(result.ToString());
             }
 
-            return Ok( trees );
+            //TODO: return resource
+            var createdTree = result.Data;
+
+            return NoContent();
         }
 
         /// <summary>
-        /// Gets the tree.
+        /// Edits the tree.
         /// </summary>
         /// <param name="id">The identifier.</param>
+        /// <param name="viewModel">The view model.</param>
         /// <returns></returns>
-        [HttpGet( RestRoute.GetTreeById )]
-        public IActionResult GetTree( int id )
+        [HttpPut(RestRoute.UpdateTree)]
+        public IActionResult EditTree(int id, EditTreeViewModel viewModel)
         {
-            var tree = _service.GetTree( id );
-
-            if ( tree == null )
+            //TODO: Move to static method
+            var domainTree = new Tree
             {
-                return NotFound( );
+                Age = viewModel.Age,
+                CrownSize = viewModel.CrownSize,
+                Height = viewModel.Height,
+                Note = viewModel.Note
+            };
+
+            var result = _treeService.UpdateTree(id, domainTree);
+            if (result.HasViolations)
+            {
+                return BadRequest(result.ToString());
             }
 
-            return Ok( tree );
-        }
-
-        [HttpPost]
-        public IActionResult CreateTree( AddTreeDto dto )
-        {
-            if ( ModelState.IsValid )
-            {
-                return Ok( );
-            }
-
-            return NotFound( );
-        }
-
-        [HttpPut( RestRoute.UpdateTree )]
-        public IActionResult EditTree( int id, EditTreeDto tree )
-        {
-            return NotFound( );
+            return NoContent();
         }
     }
 }

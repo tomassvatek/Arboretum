@@ -43,7 +43,7 @@
         <PropertyValue name="Indent_CaseContentsWhenBlock">1</PropertyValue>
         <PropertyValue name="Indent_CaseLabels">1</PropertyValue>
         <PropertyValue name="Indent_FlushLabelsLeft">0</PropertyValue>
-        <PropertyValue name="Indent_UnindentLabels">1</PropertyValue>
+        <PropertyValue name="Indent_UnindentLabels">2</PropertyValue>
         <PropertyValue name="NewLines_AnonymousTypeInitializer_EachMember">1</PropertyValue>
         <PropertyValue name="NewLines_Braces_Accessor">1</PropertyValue>
         <PropertyValue name="NewLines_Braces_AnonymousMethod">1</PropertyValue>
@@ -76,15 +76,15 @@
         <PropertyValue name="Space_BeforeDot">0</PropertyValue>
         <PropertyValue name="Space_BeforeOpenSquare">0</PropertyValue>
         <PropertyValue name="Space_BeforeSemicolonsInForStatement">0</PropertyValue>
-        <PropertyValue name="Space_BetweenEmptyMethodCallParentheses">1</PropertyValue>
-        <PropertyValue name="Space_BetweenEmptyMethodDeclarationParentheses">1</PropertyValue>
+        <PropertyValue name="Space_BetweenEmptyMethodCallParentheses">0</PropertyValue>
+        <PropertyValue name="Space_BetweenEmptyMethodDeclarationParentheses">0</PropertyValue>
         <PropertyValue name="Space_BetweenEmptySquares">0</PropertyValue>
         <PropertyValue name="Space_InControlFlowConstruct">1</PropertyValue>
         <PropertyValue name="Space_WithinCastParentheses">0</PropertyValue>
         <PropertyValue name="Space_WithinExpressionParentheses">0</PropertyValue>
-        <PropertyValue name="Space_WithinMethodCallParentheses">1</PropertyValue>
-        <PropertyValue name="Space_WithinMethodDeclarationParentheses">1</PropertyValue>
-        <PropertyValue name="Space_WithinOtherParentheses">1</PropertyValue>
+        <PropertyValue name="Space_WithinMethodCallParentheses">0</PropertyValue>
+        <PropertyValue name="Space_WithinMethodDeclarationParentheses">0</PropertyValue>
+        <PropertyValue name="Space_WithinOtherParentheses">0</PropertyValue>
         <PropertyValue name="Space_WithinSquares">0</PropertyValue>
         <PropertyValue name="Style_NamingPreferences">&lt;NamingPreferencesInfo SerializationVersion="5"&gt;
   &lt;SymbolSpecifications&gt;
@@ -351,7 +351,7 @@
         <PropertyValue name="Style_UseVarWhenDeclaringLocals">0</PropertyValue>
         <PropertyValue name="WarnOnBuildErrors">0</PropertyValue>
         <PropertyValue name="Wrapping_IgnoreSpacesAroundBinaryOperators">0</PropertyValue>
-        <PropertyValue name="Wrapping_IgnoreSpacesAroundVariableDeclaration">1</PropertyValue>
+        <PropertyValue name="Wrapping_IgnoreSpacesAroundVariableDeclaration">0</PropertyValue>
         <PropertyValue name="Wrapping_KeepStatementsOnSingleLine">1</PropertyValue>
         <PropertyValue name="Wrapping_PreserveSingleLine">1</PropertyValue>
       </ToolsOptionsSubCategory>

@@ -13,11 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arboretum.WebService", "Arb
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arboretum.AppCore", "Arboretum.AppCore\Arboretum.AppCore.csproj", "{E6EDD874-D8D1-42AD-AE97-51EAC884CF8E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{8B09CB6E-9711-4CD1-8F92-193DD3464DF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arboretum.Console", "ConsoleApp\Arboretum.Console.csproj", "{8B09CB6E-9711-4CD1-8F92-193DD3464DF0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arboretum.Common", "Arboretum.Common\Arboretum.Common.csproj", "{91F03D08-CDC5-49D4-9F4C-076B70CD23C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arboretum.Infrastructure", "Arboretum.Infrastructure\Arboretum.Infrastructure.csproj", "{19B13960-54EA-41C2-8F30-29006EF305DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arboretum.Infrastructure", "Arboretum.Infrastructure\Arboretum.Infrastructure.csproj", "{19B13960-54EA-41C2-8F30-29006EF305DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

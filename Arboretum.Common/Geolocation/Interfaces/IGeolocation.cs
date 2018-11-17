@@ -1,4 +1,4 @@
-﻿namespace Arboretum.AppCore.Models.Interfaces
+﻿namespace Arboretum.Common.Geolocation.Interfaces
 {
     public interface IGeolocation
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Arboretum.API.config
+namespace Arboretum.API.Config  
 {
     interface IDataProviderConfiguration<T>
     {

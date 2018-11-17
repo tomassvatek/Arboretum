@@ -4,6 +4,7 @@ using System.Linq;
 using Arboretum.AppCore.Models;
 using Arboretum.AppCore.Models.Interfaces;
 using Arboretum.AppCore.Repositories;
+using Arboretum.Common.Enums;
 using Arboretum.Persistence;
 
 namespace Arboretum.Infrastructure.Repositories
@@ -12,65 +13,101 @@ namespace Arboretum.Infrastructure.Repositories
     {
         protected readonly ArboretumDbContext DbContext;
 
-        public TreeRepository( ArboretumDbContext dbContext )
+        public TreeRepository(ArboretumDbContext dbContext)
         {
             DbContext = dbContext;
         }
 
-        public IList<Tree> GetTrees( IRegion region )
+        public IList<Tree> GetTrees(IRegion region)
         {
             var query = DbContext.Trees
                 .Where(t => (t.Latitude > region.LatitudeMin && region.LatitudeMax > t.Latitude) &&
                             (region.LongitudeMin < t.Longitude && region.LongitudeMax > t.Longitude));
 
             var domainTrees = MapDbTreeToDomain(query).ToList();
+
             return domainTrees;
         }
 
-        public IList<Dendrology> GetDendrologies( )
-        {
-            var query = DbContext.Dendrologies;
-            var domainDendrologies = MapDbDendrologiesToDomain(query).ToList();
-            return domainDendrologies;
-        }
-
-        public Dendrology GetDendrologyById( int id )
-        {
-            var domainDendrologies = GetDendrologies().FirstOrDefault(d => d.Id == id);
-            return domainDendrologies;
-        }
-
-        public Tree GetTreeById( int id )
+        public Tree GetTreeById(int id)
         {
             var query = DbContext.Trees.Where(t => t.Id == id);
             var domainTree = MapDbTreeToDomain(query).FirstOrDefault();
+
             return domainTree;
         }
 
-        public IList<Tree> GetTrees( IRegion region, double latitude, double longitude, int count )
+        //public IList<Tree> GetClosestTrees(IRegion region,  double latitude, double longitude, int count)
+        //{
+        //    if (count <= 0)
+        //    {
+        //        throw new ArgumentException("Count must be bigger than 0.");
+        //    }
+
+        //    var trees = GetTrees(region);
+        //    var sortedTrees = SortTreesByDistance(trees, latitude, longitude).Take(count).ToList();
+
+        //    return sortedTrees;
+        //}
+
+
+        public Tree CreateTree(Tree tree)
         {
-            throw new System.NotImplementedException( );
+            if (tree == null)
+            {
+                throw new ArgumentException("Tree cannot be null.");
+            }
+
+            var dendrologyId = DbContext.Dendrologies.Where(d => d.Id == tree.Dendrology.Id)
+                .Select(d => d.Id)
+                .FirstOrDefault();
+
+            if (dendrologyId == default(int))
+            {
+                throw new ArgumentException($"Dendrology with id={tree.Dendrology.Id} does not exits.");
+            }
+
+            DbContext.Trees.Add(new Persistence.Entities.Tree
+            {
+                Age = tree.Age,
+                Height = tree.Height,
+                CrownSize = tree.CrownSize,
+                Latitude = tree.Latitude,
+                Longitude = tree.Longitude,
+                Note = tree.Note,
+                DendrologyId = dendrologyId
+            });
+
+            DbContext.SaveChanges();
+
+            return tree;
         }
 
-
-        public Tree CreateTree( Tree tree )
+        public void UpdateTree(int id, Tree tree)
         {
-            throw new System.NotImplementedException( );
+            if (tree == null)
+            {
+                throw new ArgumentException("Tree cannot be null.");
+            }
+
+            var treeToUpdate = DbContext.Trees.FirstOrDefault(t => t.Id == id);
+            if (treeToUpdate == null)
+            {
+                throw new ArgumentException($"Tree with id={id} does not exits.");
+            }
+
+            treeToUpdate.CrownSize = tree.CrownSize;
+            treeToUpdate.TrunkSize = tree.TrunkSize;
+            treeToUpdate.Height = tree.Height;
+            treeToUpdate.Note = tree.Note;
+
+            DbContext.Trees.Update(treeToUpdate);
+            DbContext.SaveChanges();
         }
 
-        public void DeleteTree( int id )
+        private IQueryable<Tree> MapDbTreeToDomain(IQueryable<Persistence.Entities.Tree> query)
         {
-            throw new System.NotImplementedException( );
-        }
-
-        public void UpdateTree( int id, Tree tree )
-        {
-            throw new System.NotImplementedException( );
-        }
-
-        private IQueryable<Tree> MapDbTreeToDomain( IQueryable<Persistence.Entities.Tree> query )
-        {
-            return query.Select( t => new Tree
+            return query.Select(t => new Tree
             {
                 Id = t.Id,
                 Age = t.Age,
@@ -78,12 +115,10 @@ namespace Arboretum.Infrastructure.Repositories
                 Height = t.Height,
                 TrunkSize = t.TrunkSize,
                 Note = t.Note,
+                Latitude = t.Latitude,
+                Longitude = t.Longitude,
                 IsEditable = true,
-                Location = new Location
-                {
-                    Latitude = t.Latitude,
-                    Longitude = t.Longitude
-                },
+                ProviderName = ProviderName.ArboretumDb,
                 Dendrology = new Dendrology
                 {
                     Id = t.Dendrology.Id,
@@ -91,18 +126,28 @@ namespace Arboretum.Infrastructure.Repositories
                     ScientificName = t.Dendrology.ScientificName,
                     About = t.Dendrology.About
                 }
-            } );
+            });
         }
 
-        private IQueryable<Dendrology> MapDbDendrologiesToDomain( IQueryable<Persistence.Entities.Dendrology> query )
-        {
-            return query.Select( d => new Dendrology
-            {
-                Id = d.Id,
-                CommonName = d.CommonName,
-                ScientificName = d.ScientificName,
-                About = d.About
-            } );
-        }
+        //private List<Tree> SortTreesByDistance(IList<Tree> trees, double latitude, double longitude)
+        //{
+        //    var dataTable = new GeolocationDataTable();
+        //    var closestTrees = new List<Tree>();
+
+        //    foreach (var tree in trees)
+        //    {
+        //        var distance = _distanceCalculator.CalculateDistance(new Location(latitude, longitude), new Location(tree.Latitude, tree.Longitude));
+        //        dataTable.GeolocationResults.Add(new GeolocationResult(tree, distance));
+        //    }
+
+        //    dataTable.GeolocationResults.Sort();
+
+        //    foreach (var item in dataTable.GeolocationResults)
+        //    {
+        //        closestTrees.Add((Tree)item.Geolocation);
+        //    }
+
+        //    return closestTrees;
+        //}
     }
 }

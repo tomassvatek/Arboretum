@@ -22,5 +22,19 @@ namespace Arboretum.WebService.Helpers
                 return null;
             }
         }
+
+        public static T DeserializeTree(string jsonToDeserialize)
+        {
+            try
+            {
+                var tree = JsonConvert.DeserializeObject<T>(jsonToDeserialize);
+                return tree;
+            }
+            catch (Exception exception)
+            {
+                //TODO: Handle exception consitently.
+                throw new ArgumentException();
+            }
+        }
     }
 }

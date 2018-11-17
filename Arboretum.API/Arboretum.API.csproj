@@ -10,12 +10,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="appsettings.Production.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="2.4.0" />
   </ItemGroup>
 
@@ -24,7 +28,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Arboretum.Core\Arboretum.Core.csproj" />
+    <ProjectReference Include="..\Arboretum.AppCore\Arboretum.AppCore.csproj" />
+    <ProjectReference Include="..\Arboretum.Infrastructure\Arboretum.Infrastructure.csproj" />
+    <ProjectReference Include="..\Arboretum.Persistence\Arboretum.Persistence.csproj" />
+    <ProjectReference Include="..\Arboretum.WebService\Arboretum.WebService.csproj" />
   </ItemGroup>
 
 </Project>

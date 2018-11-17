@@ -2,19 +2,18 @@
 using System.Threading.Tasks;
 using Arboretum.AppCore.Models;
 using Arboretum.AppCore.Models.Interfaces;
-using Arboretum.AppCore.Repositories;
+using Arboretum.Common.Enums;
+using Arboretum.Common.ServiceResults;
 
 namespace Arboretum.AppCore.Services
 {
     public interface ITreeService
     {
-        Task<IList<Tree>> GetTreesAsync( IRegion mapViewport );
-        Task<IList<Tree>> GetTrees( IRegion viewport, double latitude, double longitude, int count );
-        Tree GetTreeById( int id );
-        IList<Dendrology> GetDendrologies( );
-        Dendrology GetDendrologyById( int id );
-        void CreateTree( Tree tree );
-        void UpdateTree( int id, Tree tree );
-        void DeleteTree( int id );
-    }
+        Task<ServiceResult<List<Tree>>> GetTreesAsync(IRegion region);
+        Task<ServiceResult<Tree>> GetTreeById(int id, ProviderName providerName);
+        Task<ServiceResult<List<Tree>>> GetClosestTreesAsync(IRegion region, double latitude, double longitude, int count);
+        //Task<ServiceResult<Tree>> GetClosestTree(int id, ProviderName providerName);    
+        ServiceResult<Tree> CreateTree(Tree tree);  
+        ServiceResult UpdateTree(int id, Tree tree);
+    }   
 }
