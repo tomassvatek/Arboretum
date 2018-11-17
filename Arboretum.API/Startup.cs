@@ -79,21 +79,20 @@ namespace Arboretum.API
             //    builder => builder.UseSqlServer(connectionString));
 
             // Use SQL Database if in Azure, otherwise, use SQLite
-            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+            if (Configuration["ASPNETCORE_ENVIROMENT"] == "Production")
             {
                 services.AddDbContext<ArboretumDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
             }
             else
             {
-                var connectionString = Configuration["ConnectionString"];
-                services.AddDbContext<ArboretumDbContext>(
-                    builder => builder.UseSqlServer(connectionString));
+                var connectionString = "Server=(localdb)\\mssqllocaldb;Database=ArboretumDb;Trusted_Connection=True;";
+                services.AddDbContext<ArboretumDbContext>(options =>
+                    options.UseSqlServer(connectionString));    
             }
 
             // Automatically perform database migration
             services.BuildServiceProvider().GetService<ArboretumDbContext>().Database.Migrate();
-
 
             // AppCore services
             services.AddTransient<ITreeService, TreeService>();
