@@ -37,12 +37,12 @@ namespace Arboretum.API
             // Configure Swagger
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info
-                {
-                    Title = "Arboretum client API",
-                    Version = "v1",
-                    Contact = new Contact() { Name = "developer", Email = "virtualarboretum@gmail.com" }
-                });
+                //c.SwaggerDoc("v1", new Info
+                //{
+                //    Title = "Arboretum client API",
+                //    Version = "v1",
+                //    Contact = new Contact() { Name = "developer", Email = "virtualarboretum@gmail.com" }
+                //});
 
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 var xmlPath = Path.Combine(basePath, "Arboretum.API.xml");
@@ -58,11 +58,11 @@ namespace Arboretum.API
             {
                 //app.UseDeveloperExceptionPage();
                 //app.UseDatabaseErrorPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Arboretum");
-                });
+                //app.UseSwagger();
+                //app.UseSwaggerUI(c =>
+                //{
+                //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Arboretum");
+                //});
             }
 
             app.UseDeveloperExceptionPage();
