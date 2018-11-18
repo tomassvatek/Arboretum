@@ -18,7 +18,7 @@ namespace Arboretum.Infrastructure.Repositories
             DbContext = dbContext;
         }
 
-        public IList<Tree> GetTrees(IRegion region)
+        public IList<ITree> GetTrees(IRegion region)
         {
             var query = DbContext.Trees
                 .Where(t => (t.Latitude > region.LatitudeMin && region.LatitudeMax > t.Latitude) &&
@@ -29,7 +29,7 @@ namespace Arboretum.Infrastructure.Repositories
             return domainTrees;
         }
 
-        public Tree GetTreeById(int id)
+        public ITree GetTreeById(int id)
         {
             var query = DbContext.Trees.Where(t => t.Id == id);
             var domainTree = MapDbTreeToDomain(query).FirstOrDefault();
@@ -51,7 +51,7 @@ namespace Arboretum.Infrastructure.Repositories
         //}
 
 
-        public Tree CreateTree(Tree tree)
+        public ITree CreateTree(Tree tree)
         {
             if (tree == null)
             {
@@ -105,7 +105,7 @@ namespace Arboretum.Infrastructure.Repositories
             DbContext.SaveChanges();
         }
 
-        private IQueryable<Tree> MapDbTreeToDomain(IQueryable<Persistence.Entities.Tree> query)
+        private IQueryable<ITree> MapDbTreeToDomain(IQueryable<Persistence.Entities.Tree> query)
         {
             return query.Select(t => new Tree
             {

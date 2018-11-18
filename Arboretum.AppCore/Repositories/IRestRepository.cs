@@ -8,7 +8,7 @@ namespace Arboretum.AppCore.Repositories
 {
     public interface IRestRepository
     {
-        Task<IList<Tree>> GetTreesAsync(IRegion region);
-        Task<Tree> GetTreeByIdAsync(int id, ProviderName providerName);
+        Task<IList<ITree>> GetTreesAsync(IRegion region);
+        Task<ITree> GetTreeByIdAsync(int id, ProviderName providerName);
     }
-}
+}   

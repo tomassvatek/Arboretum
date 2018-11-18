@@ -1,5 +1,6 @@
 ﻿using Arboretum.Persistence.Configurations;
 using Arboretum.Persistence.Entities;
+using Arboretum.Persistence.Seed;
 using Microsoft.EntityFrameworkCore;
 
 namespace Arboretum.Persistence
@@ -20,6 +21,8 @@ namespace Arboretum.Persistence
             modelBuilder.ApplyConfiguration( new DendrologyConfiguration( ) );
 
             base.OnModelCreating( modelBuilder );
+
+            modelBuilder.Seed();
         }
     }
 }

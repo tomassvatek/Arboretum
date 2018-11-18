@@ -12,7 +12,7 @@ namespace Arboretum.Common.Geolocation
             GeolocationResults = new List<GeolocationResult>();
         }
             
-        public List<GeolocationResult> Calculate(List<T> geolocationCollection, double latitude, double longitude)
+        public List<GeolocationResult> Calculate(IList<T> geolocationCollection, double latitude, double longitude)
         {
             GeolocationResults.Clear();
 

@@ -15,34 +15,38 @@ namespace Arboretum.WebService
 {
     public class RestRepository : IRestRepository
     {
-        private readonly List<ITreeDataProvider> _treeProviders;
         private readonly IHttpClient _httpClient;
+        private readonly List<ITreeDataProvider> _treeProviders = new List<ITreeDataProvider>();
 
         public RestRepository(IHttpClient httpClient)
         {
             _httpClient = httpClient;
-            _treeProviders = new List<ITreeDataProvider>();
             RegisterProviders();
         }
 
-        public async Task<IList<Tree>> GetTreesAsync(IRegion region)
+        public async Task<IList<ITree>> GetTreesAsync(IRegion region)
         {
-            var trees = new List<Tree>();
+            var trees = new List<ITree>();
 
             foreach (var treeProvider in _treeProviders)
             {
-                trees.AddRange(await treeProvider.GetTreesAsync(region));
+                var providerTrees = await treeProvider.GetTreesAsync(region);
+                if (providerTrees != null)
+                {
+                    trees.AddRange(providerTrees);
+                    providerTrees.Clear();
+                }
             }
 
             return trees;
         }
 
-        public async Task<Tree> GetTreeByIdAsync(int id, ProviderName providerName)
+        public async Task<ITree> GetTreeByIdAsync(int id, ProviderName providerName)
         {
             var provider = GetProviderByName(providerName);
             if (provider == null)
             {
-                throw new ArgumentException("Provider does not exits.");
+                throw new ArgumentException($"Provider with id={id} does not exist.");
             }
 
             var tree = await provider.GetTreeByIdAsync(id);

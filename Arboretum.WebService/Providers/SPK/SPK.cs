@@ -31,33 +31,47 @@ namespace Arboretum.WebService.Providers.SPK
         public bool IsEditable { get; } = false;
         public IList<RequestHeaders> RequestHeaders { get; set; } = new List<RequestHeaders>();
 
-        public async Task<System.Collections.Generic.IList<Tree>> GetTreesAsync(IRegion region)
+
+        //TODO: SPK musí mít rozmezí mezi dvěmi requsty alespon 2 vteřiny. Pokud ne, vrací expcetion.
+        public async Task<System.Collections.Generic.IList<ITree>> GetTreesAsync(IRegion region)
         {
-            var json = await _httpClient.FetchDataAsync(BaseAddress, $"trees?lat_min={region.LatitudeMin}&lat_max={region.LatitudeMax}&lon_min={region.LongitudeMin}&lon_max={region.LongitudeMax}", RequestHeaders);
-            var trees = MapToDomain(json);
-
-            return trees;
-        }
-
-        public async Task<Tree> GetTreeByIdAsync(int id)
-        {
-            //var json = await _httpClient.FetchDataAsync(BaseAddress, $"tree/{id}", RequestHeaders);
-            //var dtos = JsonHelper<TreeDto>.DeserializeTree(json);
-
-            //var tree = MapToDomain(dtos).First();
-
-            return null;
-        }
-
-        private List<Tree> MapToDomain(string json) 
-        {
-            var dtos = JsonHelper<TreeDto>.DeserializeTrees(json);
-            if (dtos == null)
+            try
             {
-                throw new ArgumentException();
-            }
+                var json = await _httpClient.FetchDataAsync(BaseAddress,
+                    $"trees?lat_min={region.LatitudeMin}&lat_max={region.LatitudeMax}&lon_min={region.LongitudeMin}&lon_max={region.LongitudeMax}",
+                    RequestHeaders);
 
-            var trees = dtos.Select(t => new Tree()
+                var deserializeTrees = JsonHelper<List<TreeDto>>.Deserialize(json);    
+                var trees = MapToDomain(deserializeTrees);
+                return trees;
+
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        //TODO: SPK musí mít rozmezí mezi dvěmi requsty alespon 2 vteřiny. Pokud ne, vrací expcetion.
+        public async Task<ITree> GetTreeByIdAsync(int id)
+        {
+            try
+            {
+                var json = await _httpClient.FetchDataAsync(BaseAddress, $"tree/{id}", RequestHeaders);
+                var deserializeTree = JsonHelper<TreeDto>.Deserialize(json);
+                var tree = MapToDomain(new List<TreeDto> {deserializeTree}).First();
+
+                return tree;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        private IList<ITree> MapToDomain(IList<TreeDto> trees)
+        {
+            return trees?.Select(t => new Tree()
             {
                 Id = t.Id,
                 Age = t.Age,
@@ -67,16 +81,14 @@ namespace Arboretum.WebService.Providers.SPK
                 TrunkSize = t.TrunkSize,
                 Latitude = t.Coordinates.Latitude,
                 Longitude = t.Coordinates.Longitude,
-                ProviderName = this.Name,
-                IsEditable = this.IsEditable,
+                ProviderName = Name,
+                IsEditable = IsEditable,
                 Dendrology = new Dendrology
                 {
                     CommonName = t.CommonName,
                     ScientificName = t.ScientificName
                 }
-            }).ToList();
-
-            return trees;
+            }).ToList<ITree>();
         }
     }
 }

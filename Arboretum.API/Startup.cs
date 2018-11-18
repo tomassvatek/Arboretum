@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using Arboretum.AppCore.Repositories;
 using Arboretum.AppCore.Services;
@@ -83,10 +84,11 @@ namespace Arboretum.API
             {
                 services.AddDbContext<ArboretumDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
+                Debug.WriteLine($"Production: {Configuration.GetConnectionString("MyDbConnection")}");
             }
             else
             {
-                var connectionString = "Server=(localdb)\\mssqllocaldb;Database=ArboretumDb;Trusted_Connection=True;";
+                var connectionString = Configuration.GetConnectionString("DefaultConnection");
                 services.AddDbContext<ArboretumDbContext>(options =>
                     options.UseSqlServer(connectionString));    
             }

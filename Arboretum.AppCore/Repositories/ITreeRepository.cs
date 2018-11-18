@@ -7,11 +7,10 @@ namespace Arboretum.AppCore.Repositories
 {
     public interface ITreeRepository
     {
-        IList<Tree> GetTrees(IRegion region);
+        IList<ITree> GetTrees(IRegion region);
         //IList<Tree> GetClosestTrees( IRegion region, double latitude, double longitude, int count );          
-        Tree GetTreeById(int id);
-        Tree CreateTree(Tree tree);
+        ITree GetTreeById(int id);  
+        ITree CreateTree(Tree tree);
         void UpdateTree(int id, Tree tree);
-        //void DeleteTree( int id );  
     }
 }

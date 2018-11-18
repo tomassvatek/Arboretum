@@ -13,8 +13,8 @@ namespace Arboretum.WebService.Providers.Interfaces
         ProviderName Name { get; }
         string BaseAddress { get; }
         bool IsEditable { get; }
-        IList<RequestHeaders> RequestHeaders { get; set; }
-        Task<IList<Tree>> GetTreesAsync(IRegion region);
-        Task<Tree> GetTreeByIdAsync(int id);
+        IList<RequestHeaders> RequestHeaders { get; set; }  
+        Task<IList<ITree>> GetTreesAsync(IRegion region);
+        Task<ITree> GetTreeByIdAsync(int id);
     }
 }

@@ -22,12 +22,12 @@ namespace Arboretum.AppCore.Services
             _restRepository = restRepository;
         }
 
-        public async Task<ServiceResult<List<Tree>>> GetTreesAsync(IRegion region)
+        public async Task<ServiceResult<IList<ITree>>> GetTreesAsync(IRegion region)
         {
-            var result = new ServiceResult<List<Tree>>();
+            var result = new ServiceResult<IList<ITree>>();
             try
             {
-                var trees = new List<Tree>();
+                var trees = new List<ITree>();
 
                 var repositoryResult = _treeRepository.GetTrees(region);
                 if (repositoryResult != null)
@@ -51,9 +51,9 @@ namespace Arboretum.AppCore.Services
             }
         }
 
-        public async Task<ServiceResult<List<Tree>>> GetClosestTreesAsync(IRegion region, double latitude, double longitude, int count)
+        public async Task<ServiceResult<IList<ITree>>> GetClosestTreesAsync(IRegion region, double latitude, double longitude, int count)
         {
-            var result = new ServiceResult<List<Tree>>();
+            var result = new ServiceResult<IList<ITree>>();
 
             if (count <= 0)
             {
@@ -65,7 +65,7 @@ namespace Arboretum.AppCore.Services
             {
                 var treesServiceResult = await GetTreesAsync(region);
 
-                var geolocationDistanceTable = new GeolocationDistanceTable<Tree>();
+                var geolocationDistanceTable = new GeolocationDistanceTable<ITree>();
                 var geolocationResults = geolocationDistanceTable.Calculate(treesServiceResult.Data, latitude, longitude);
                 var closestTrees = MapGeolocationResultsToDomainTrees(geolocationResults);
 
@@ -80,7 +80,7 @@ namespace Arboretum.AppCore.Services
         }
 
 
-        public async Task<ServiceResult<Tree>> GetTreeById(int id, ProviderName providerName)
+        public async Task<ServiceResult<ITree>> GetTreeById(int id, ProviderName providerName)
         {
             if (providerName == ProviderName.ArboretumDb)
             {
@@ -92,9 +92,9 @@ namespace Arboretum.AppCore.Services
             return restResult;  
         }
 
-        public ServiceResult<Tree> CreateTree(Tree tree)
+        public ServiceResult<ITree> CreateTree(Tree tree)
         {
-            var result = new ServiceResult<Tree>();
+            var result = new ServiceResult<ITree>();
 
             try
             {
@@ -109,13 +109,14 @@ namespace Arboretum.AppCore.Services
             }
         }
 
+        //TODO: Upravit logiku, která se řídí podle providera
         public ServiceResult UpdateTree(int id, Tree tree)
         {
             var result = new ServiceResult();
 
             if (tree.IsEditable)
             {
-                result.AddViolation("This tree is not editable.");
+                result.AddViolation($"Tree with id={id} is not editable.");
                 return result;
             }
 
@@ -131,9 +132,9 @@ namespace Arboretum.AppCore.Services
             }
         }
 
-        private ServiceResult<Tree> GetTreeByIdFromDb(int id)
+        private ServiceResult<ITree> GetTreeByIdFromDb(int id)
         {
-            var result = new ServiceResult<Tree>();
+            var result = new ServiceResult<ITree>();
 
             try
             {
@@ -154,9 +155,9 @@ namespace Arboretum.AppCore.Services
             }
         }
                 
-        private async Task<ServiceResult<Tree>> GetTreeByIdFromRest(int id, ProviderName providerName)     
+        private async Task<ServiceResult<ITree>> GetTreeByIdFromRest(int id, ProviderName providerName)     
         {
-            var result = new ServiceResult<Tree>();
+            var result = new ServiceResult<ITree>();
 
             try
             {
@@ -177,9 +178,9 @@ namespace Arboretum.AppCore.Services
             }
         }
 
-        private List<Tree> MapGeolocationResultsToDomainTrees(IList<GeolocationResult> geolocationResults)
+        private List<ITree> MapGeolocationResultsToDomainTrees(IList<GeolocationResult> geolocationResults)
         {
-            var domainTrees = new List<Tree>();
+            var domainTrees = new List<ITree>();
 
             foreach (var result in geolocationResults)
             {

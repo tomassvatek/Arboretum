@@ -4,14 +4,16 @@ using Arboretum.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Arboretum.Persistence.Migrations
 {
     [DbContext(typeof(ArboretumDbContext))]
-    partial class ArboretumDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181118152119_Seed")]
+    partial class Seed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,8 +75,7 @@ namespace Arboretum.Persistence.Migrations
                     b.HasData(
                         new { Id = 1, Age = 50, CrownSize = 20.0, DendrologyId = 1, Latitude = 49.53313, Longitude = 14.80902 },
                         new { Id = 2, Age = 80, CrownSize = 20.0, DendrologyId = 2, Latitude = 49.53314, Longitude = 14.80903 },
-                        new { Id = 3, Age = 90, CrownSize = 208.0, DendrologyId = 2, Latitude = 49.53304, Longitude = 14.809039 },
-                        new { Id = 4, Age = 90, CrownSize = 208.0, DendrologyId = 1, Latitude = 49.53304, Longitude = 14.809039 }
+                        new { Id = 3, Age = 90, CrownSize = 208.0, DendrologyId = 2, Latitude = 49.53304, Longitude = 14.809039 }
                     );
                 });
 

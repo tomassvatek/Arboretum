@@ -9,11 +9,11 @@ namespace Arboretum.AppCore.Services
 {
     public interface ITreeService
     {
-        Task<ServiceResult<List<Tree>>> GetTreesAsync(IRegion region);
-        Task<ServiceResult<Tree>> GetTreeById(int id, ProviderName providerName);
-        Task<ServiceResult<List<Tree>>> GetClosestTreesAsync(IRegion region, double latitude, double longitude, int count);
+        Task<ServiceResult<IList<ITree>>> GetTreesAsync(IRegion region);
+        Task<ServiceResult<ITree>> GetTreeById(int id, ProviderName providerName);
+        Task<ServiceResult<IList<ITree>>> GetClosestTreesAsync(IRegion region, double latitude, double longitude, int count);
         //Task<ServiceResult<Tree>> GetClosestTree(int id, ProviderName providerName);    
-        ServiceResult<Tree> CreateTree(Tree tree);  
+        ServiceResult<ITree> CreateTree(Tree tree);     
         ServiceResult UpdateTree(int id, Tree tree);
     }   
 }

@@ -10,6 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Config\DesignTimeDbContextFactory.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="appsettings.Production.json" />
   </ItemGroup>
 
