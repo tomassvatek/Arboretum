@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>d086912c-6c8f-4b04-963b-cb4e217ca556</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -9,12 +10,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Config\DesignTimeDbContextFactory.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="appsettings.Production.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="2.4.0" />
   </ItemGroup>
 
@@ -23,7 +32,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Arboretum.Core\Arboretum.Core.csproj" />
+    <ProjectReference Include="..\Arboretum.AppCore\Arboretum.AppCore.csproj" />
+    <ProjectReference Include="..\Arboretum.Infrastructure\Arboretum.Infrastructure.csproj" />
+    <ProjectReference Include="..\Arboretum.Persistence\Arboretum.Persistence.csproj" />
+    <ProjectReference Include="..\Arboretum.WebService\Arboretum.WebService.csproj" />
   </ItemGroup>
 
 </Project>

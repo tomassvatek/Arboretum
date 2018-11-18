@@ -6,7 +6,7 @@ namespace Arboretum.Core.Extensions
 {
     public static class DoubleExtension
     {
-        public static double ToRadians(this double angle)
+        public static double ToRadians( this double angle )
         {
             return Math.PI * angle / 180;
         }

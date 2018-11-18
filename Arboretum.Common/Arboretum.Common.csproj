@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Geolocation\HaverniseDistance_v1.cs" />
+    <Compile Remove="Geolocation\Interfaces\IDistanceCalculator.cs" />
+  </ItemGroup>
+
+</Project>
