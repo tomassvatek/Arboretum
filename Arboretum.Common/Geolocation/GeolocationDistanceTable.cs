@@ -1,29 +1,30 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Arboretum.Common.Geolocation.Interfaces;
 
 namespace Arboretum.Common.Geolocation
 {
-    public class GeolocationDistanceTable<T> where T : IGeolocation 
-    {       
-        public List<GeolocationResult> GeolocationResults { get; set; } 
+    public class GeolocationDistanceTable<T> where T : IGeolocation
+    {
+        private readonly List<GeolocationResult> _geolocationResults;
 
         public GeolocationDistanceTable()
         {
-            GeolocationResults = new List<GeolocationResult>();
+            _geolocationResults = new List<GeolocationResult>();
         }
             
         public List<GeolocationResult> Calculate(IList<T> geolocationCollection, double latitude, double longitude)
         {
-            GeolocationResults.Clear();
+            _geolocationResults.Clear();
 
             foreach (var geolocationItem in geolocationCollection)  
             {
                 var distance = HaverniseDistance.Calculate(latitude, longitude, geolocationItem.Latitude, geolocationItem.Longitude);
-                GeolocationResults.Add(new GeolocationResult(geolocationItem, distance));
+                _geolocationResults.Add(new GeolocationResult(geolocationItem, distance));
             }
 
-            GeolocationResults.Sort();
-            return GeolocationResults;
+            _geolocationResults.Sort();
+            return _geolocationResults;
         }
     }
 }

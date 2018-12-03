@@ -1,16 +1,18 @@
 ﻿using System.Threading.Tasks;
 using Arboretum.AppCore.Models;
 using Arboretum.AppCore.Services;
-using Arboretum.API.Config;
-using Arboretum.API.ViewModels;
 using Arboretum.Common.Enums;
+using Arboretum.Web.Config;
+using Arboretum.Web.Mappers;
+using Arboretum.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 
-namespace Arboretum.API.Controllers
+namespace Arboretum.Web.Controllers
 {
     [Produces("application/json")]
     [Route(RestRoute.ControllerRoute)]
+    [ApiController]
     public class TreesController : ControllerBase
     {
         private readonly ITreeService _treeService;
@@ -26,14 +28,8 @@ namespace Arboretum.API.Controllers
         /// <param name="visibleRegion">The visible region.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetTrees(VisibleRegionViewModel visibleRegion)
+        public async Task<IActionResult> GetTrees([FromQuery] VisibleRegionViewModel visibleRegion)
         {
-            // TODO: Delete - Just for testing purpose
-            visibleRegion.LatitudeMax = 49.797345;
-            visibleRegion.LatitudeMin = 49.795380;
-            visibleRegion.LongitudeMax = 12.634210;
-            visibleRegion.LongitudeMin = 12.633100;
-
             var result = await _treeService.GetTreesAsync(visibleRegion);
             if (result.HasViolations)
             {
@@ -41,8 +37,9 @@ namespace Arboretum.API.Controllers
             }
 
             var trees = result.Data;
+            var vm = ViewModelMapper.MapTreeToViewModel(trees);
 
-            return Ok(trees);
+            return Ok(vm);
         }
 
         /// <summary>
@@ -54,13 +51,13 @@ namespace Arboretum.API.Controllers
         /// <param name="count">The count.</param>
         /// <returns></returns>
         [HttpGet(RestRoute.GetClosestTrees)]
-        public async Task<IActionResult> GetClosestTrees(VisibleRegionViewModel visibleRegion, double latitude,
+        public async Task<IActionResult> GetClosestTrees([FromQuery] VisibleRegionViewModel visibleRegion, double latitude,
             double longitude, int count)
         {
-            visibleRegion.LatitudeMax = 49.797345;
-            visibleRegion.LatitudeMin = 49.795380;
-            visibleRegion.LongitudeMax = 12.634210;
-            visibleRegion.LongitudeMin = 12.633100;
+            //visibleRegion.LatitudeMax = 49.797345;
+            //visibleRegion.LatitudeMin = 49.795380;
+            //visibleRegion.LongitudeMax = 12.634210;
+            //visibleRegion.LongitudeMin = 12.633100;
 
             var result = await _treeService.GetClosestTreesAsync(visibleRegion, latitude, longitude, count);
             if (result.HasViolations)
@@ -69,8 +66,9 @@ namespace Arboretum.API.Controllers
             }
 
             var closestTrees = result.Data;
+            var vm = ViewModelMapper.MapTreeToViewModel(closestTrees);
 
-            return Ok(closestTrees);
+            return Ok(vm);  
         }
 
     
@@ -84,9 +82,36 @@ namespace Arboretum.API.Controllers
             }
 
             var tree = result.Data;
-
-            return Ok(tree);
+            var vm = ViewModelMapper.MapTreeToViewModel(tree);
+            return Ok(vm);
         }
+
+        //TODO: Method bellow do same work. Merge these two!
+        [HttpGet(RestRoute.GetClosestTreeByDendrology)]
+        public async Task<IActionResult> GetClosestTreeByDendrology([FromQuery] VisibleRegionViewModel region, double latitude, double longitude, string commonName)      
+        {
+            var result = await _treeService.GetClosestTree(region, latitude, longitude, commonName);
+            if (result.HasViolations)
+            {
+                return BadRequest();
+            }
+
+            var closestTree = result.Data;
+            return Ok(closestTree);
+        }
+
+        //[HttpGet(RestRoute.GetClosestTree)]
+        //public async Task<IActionResult> GetClosestTreeAsync([FromQuery] VisibleRegionViewModel region, double latitude, double longitude, string commonName)
+        //{
+        //    var result = await _treeService.GetClosestTree(region, latitude, longitude, commonName);
+        //    if (result.HasViolations)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    var closestTree = result.Data;
+        //    return Ok(closestTree);
+        //}
 
         /// <summary>
         /// Creates the tree.
@@ -94,7 +119,7 @@ namespace Arboretum.API.Controllers
         /// <param name="viewModel">The view model.</param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult CreateTree(CreateTreeViewModel viewModel)
+        public IActionResult CreateTree([FromQuery] CreateTreeViewModel viewModel)
         {
             var domainTree = new Tree()
             {
@@ -121,7 +146,7 @@ namespace Arboretum.API.Controllers
         /// <param name="viewModel">The view model.</param>
         /// <returns></returns>
         [HttpPut(RestRoute.UpdateTree)]
-        public IActionResult EditTree(int id, EditTreeViewModel viewModel)
+        public IActionResult EditTree(int id, [FromQuery] EditTreeViewModel viewModel)
         {
             //TODO: Move to static method
             var domainTree = new Tree

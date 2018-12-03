@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Arboretum.API.Models
+namespace Arboretum.Web.Models
 {
     public class TreeDetailDto
     {

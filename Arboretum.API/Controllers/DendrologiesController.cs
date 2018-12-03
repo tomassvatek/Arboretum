@@ -1,11 +1,13 @@
-﻿using Arboretum.AppCore.Services;
-using Arboretum.API.Config;
+﻿using Arboretum.AppCore.Models;
+using Arboretum.AppCore.Services;
+using Arboretum.Web.Config;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Arboretum.API.Controllers
+namespace Arboretum.Web.Controllers
 {
     [Produces("application/json")]
     [Route(RestRoute.ControllerRoute)]
+    [ApiController]
     public class DendrologiesController : ControllerBase
     {
         private readonly IDendrologyService _dendrologyService;
@@ -16,9 +18,9 @@ namespace Arboretum.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult Dendrologies()
+        public IActionResult Dendrologies([FromQuery] Reduction reduction)
         {
-            var result = _dendrologyService.GetDendrologies();
+            var result = _dendrologyService.GetDendrologies(reduction);
             if (result.HasViolations)
             {
                 return BadRequest(result.ToString());

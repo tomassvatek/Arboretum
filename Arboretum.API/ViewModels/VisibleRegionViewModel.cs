@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Arboretum.AppCore.Models.Interfaces;
 
-namespace Arboretum.API.ViewModels
+namespace Arboretum.Web.ViewModels
 {
     public class VisibleRegionViewModel : IRegion
     {   

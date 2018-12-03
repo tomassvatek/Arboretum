@@ -1,4 +1,6 @@
-﻿namespace Arboretum.API.ViewModels
+﻿using Arboretum.Common.Enums;
+
+namespace Arboretum.Web.ViewModels
 {
     public class TreeMapViewModel
     {
@@ -11,6 +13,7 @@
         }
 
         public int Id { get; set; }
+        public ProviderName ProviderName { get; set; }      
         public string CommonName { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿
-namespace Arboretum.API.Models
+namespace Arboretum.Web.Models
 {
     public class AddTreeDto
     {

@@ -29,6 +29,7 @@ namespace Arboretum.Infrastructure.Repositories
             return domainTrees;
         }
 
+
         public ITree GetTreeById(int id)
         {
             var query = DbContext.Trees.Where(t => t.Id == id);

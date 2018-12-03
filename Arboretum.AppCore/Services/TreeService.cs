@@ -51,7 +51,7 @@ namespace Arboretum.AppCore.Services
             }
         }
 
-        public async Task<ServiceResult<IList<ITree>>> GetClosestTreesAsync(IRegion region, double latitude, double longitude, int count)
+        public async Task<ServiceResult<IList<ITree>>> GetClosestTreesAsync(IRegion region, double latitude, double longitude, int count = default(int))
         {
             var result = new ServiceResult<IList<ITree>>();
 
@@ -69,7 +69,7 @@ namespace Arboretum.AppCore.Services
                 var geolocationResults = geolocationDistanceTable.Calculate(treesServiceResult.Data, latitude, longitude);
                 var closestTrees = MapGeolocationResultsToDomainTrees(geolocationResults);
 
-                result.Data = closestTrees.Take(count).ToList();
+                result.Data = count == default(int) ? closestTrees.ToList() : closestTrees.Take(count).ToList();
                 return result;
             }
             catch (Exception exception)
@@ -80,16 +80,40 @@ namespace Arboretum.AppCore.Services
         }
 
 
+        public async Task<ServiceResult<ITree>> GetClosestTree(IRegion region, double latitude, double longitude, string commonName)
+        {
+            var result = new ServiceResult<ITree>();
+
+            var closestTreesResult = await GetClosestTreesAsync(region, latitude, longitude);
+            if (closestTreesResult.HasViolations)
+            {
+                result.AddViolation("There are no trees in your area.");
+                return result;
+            }
+
+            var closestTrees = closestTreesResult.Data;
+            var closestTree = closestTrees.FirstOrDefault(tree => tree.Dendrology.CommonName == commonName);
+            if (closestTree == null)
+            {
+                result.AddViolation($"There is no {commonName} in your area.");
+                return result;
+            }
+
+            result.Data = closestTree;
+            return result;
+        }
+
+
         public async Task<ServiceResult<ITree>> GetTreeById(int id, ProviderName providerName)
         {
             if (providerName == ProviderName.ArboretumDb)
             {
                 var repositoryResult = GetTreeByIdFromDb(id);
                 return repositoryResult;
-            }   
+            }
 
             var restResult = await GetTreeByIdFromRest(id, providerName);
-            return restResult;  
+            return restResult;
         }
 
         public ServiceResult<ITree> CreateTree(Tree tree)
@@ -154,8 +178,8 @@ namespace Arboretum.AppCore.Services
                 return result;
             }
         }
-                
-        private async Task<ServiceResult<ITree>> GetTreeByIdFromRest(int id, ProviderName providerName)     
+
+        private async Task<ServiceResult<ITree>> GetTreeByIdFromRest(int id, ProviderName providerName)
         {
             var result = new ServiceResult<ITree>();
 
@@ -178,16 +202,25 @@ namespace Arboretum.AppCore.Services
             }
         }
 
-        private List<ITree> MapGeolocationResultsToDomainTrees(IList<GeolocationResult> geolocationResults)
+
+        private IList<ITree> MapGeolocationResultsToDomainTrees(IList<GeolocationResult> geolocationResults)
         {
             var domainTrees = new List<ITree>();
 
             foreach (var result in geolocationResults)
             {
-                domainTrees.Add((Tree)result.Geolocation);
+                if (!isDuplicateSpecies(domainTrees, (ITree)result.Geolocation))
+                {
+                    domainTrees.Add((ITree)result.Geolocation);
+                }
             }
 
             return domainTrees;
+        }
+
+        private bool isDuplicateSpecies(IList<ITree> trees, ITree tree)
+        {
+            return trees.Any(t => t.Dendrology.CommonName == tree.Dendrology.CommonName);
         }
     }
 }

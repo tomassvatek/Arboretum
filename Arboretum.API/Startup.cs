@@ -15,7 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace Arboretum.API
+namespace Arboretum.Web
 {
     public class Startup
     {
@@ -38,12 +38,12 @@ namespace Arboretum.API
             // Configure Swagger
             services.AddSwaggerGen(c =>
             {
-                //c.SwaggerDoc("v1", new Info
-                //{
-                //    Title = "Arboretum client API",
-                //    Version = "v1",
-                //    Contact = new Contact() { Name = "developer", Email = "virtualarboretum@gmail.com" }
-                //});
+                c.SwaggerDoc("v1", new Info
+                {
+                    Title = "Arboretum client API",
+                    Version = "v1",
+                    Contact = new Contact() { Name = "developer", Email = "virtualarboretum@gmail.com" }
+                });
 
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 var xmlPath = Path.Combine(basePath, "Arboretum.API.xml");
@@ -57,13 +57,13 @@ namespace Arboretum.API
             // Configure a developer environment 
             if (env.IsDevelopment())
             {
-                //app.UseDeveloperExceptionPage();
-                //app.UseDatabaseErrorPage();
-                //app.UseSwagger();
-                //app.UseSwaggerUI(c =>
-                //{
-                //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Arboretum");
-                //});
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Arboretum");
+                });
             }
 
             app.UseDeveloperExceptionPage();
@@ -74,11 +74,6 @@ namespace Arboretum.API
 
         private void ConfigureArboretum(IServiceCollection services)
         {
-            // Persistence configuration
-            //var connectionString = Configuration["ConnectionString"];
-            //services.AddDbContext<ArboretumDbContext>(
-            //    builder => builder.UseSqlServer(connectionString));
-
             // Use SQL Database if in Azure, otherwise, use SQLite
             if (Configuration["ASPNETCORE_ENVIROMENT"] == "Production")
             {

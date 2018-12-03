@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace Arboretum.API
+namespace Arboretum.Web
 {
     public class Program
     {

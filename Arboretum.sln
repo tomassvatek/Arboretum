@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arboretum.Core", "Arboretum.Core\Arboretum.Core.csproj", "{0F4E8065-412C-4623-A053-48E1FE5AF885}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arboretum.API", "Arboretum.API\Arboretum.API.csproj", "{7EBE9619-2DED-44FF-B456-21555F5C295C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arboretum.Web", "Arboretum.API\Arboretum.Web.csproj", "{7EBE9619-2DED-44FF-B456-21555F5C295C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arboretum.Persistence", "Arboretum.Persistence\Arboretum.Persistence.csproj", "{59AFC9CC-253A-4CAA-B1C1-9180FC2F9231}"
 EndProject

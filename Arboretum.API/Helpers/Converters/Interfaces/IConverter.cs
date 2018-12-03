@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Arboretum.API.Helpers.Converters.Interfaces
+namespace Arboretum.Web.Helpers.Converters.Interfaces
 {
     public interface IConverter<TSource, TDestination>
     {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Arboretum.AppCore.Models;
+using Arboretum.AppCore.Models.Interfaces;
 using Arboretum.AppCore.Repositories;
 using Arboretum.Common.ServiceResults;
 
@@ -16,9 +17,9 @@ namespace Arboretum.AppCore.Services
             _dendrologyRepository = dendrologyRepository;
         }
 
-        public ServiceResult<List<Dendrology>> GetDendrologies()
+        public ServiceResult<List<IDendrology>> GetDendrologies()
         {
-            var result = new ServiceResult<List<Dendrology>>();
+            var result = new ServiceResult<List<IDendrology>>();
 
             try
             {
@@ -32,10 +33,27 @@ namespace Arboretum.AppCore.Services
                 return result;
             }
         }
-        
-        public ServiceResult<Dendrology> GetDendrologyById(int id)
+
+        public ServiceResult<IList<IDendrology>> GetDendrologies(IReduction reduction)
         {
-            var result = new ServiceResult<Dendrology>();
+            var result = new ServiceResult<IList<IDendrology>>();
+
+            try
+            {
+                var dendrologies = _dendrologyRepository.GetDendrologies(reduction);
+                result.Data = dendrologies;
+                return result;
+            }
+            catch (Exception exception)
+            {
+                result.AddViolation(exception);
+                return result;
+            }
+        }
+
+        public ServiceResult<IDendrology> GetDendrologyById(int id)
+        {
+            var result = new ServiceResult<IDendrology>();
 
             try
             {
