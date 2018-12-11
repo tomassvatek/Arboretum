@@ -21,8 +21,9 @@ namespace Arboretum.Infrastructure.Repositories
         public IList<ITree> GetTrees(IRegion region)
         {
             var query = DbContext.Trees
-                .Where(t => (t.Latitude > region.LatitudeMin && region.LatitudeMax > t.Latitude) &&
-                            (region.LongitudeMin < t.Longitude && region.LongitudeMax > t.Longitude));
+                .Where(t => 
+                    (t.Latitude > region.LatitudeMin && region.LatitudeMax > t.Latitude) &&
+                    (region.LongitudeMin < t.Longitude && region.LongitudeMax > t.Longitude));
 
             var domainTrees = MapDbTreeToDomain(query).ToList();
 

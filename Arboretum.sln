@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arboretum.Console", "Consol
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arboretum.Common", "Arboretum.Common\Arboretum.Common.csproj", "{91F03D08-CDC5-49D4-9F4C-076B70CD23C0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arboretum.Infrastructure", "Arboretum.Infrastructure\Arboretum.Infrastructure.csproj", "{19B13960-54EA-41C2-8F30-29006EF305DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arboretum.Infrastructure", "Arboretum.Infrastructure\Arboretum.Infrastructure.csproj", "{ABA16B9C-825C-4E0A-8A51-8AB2896F9417}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,10 +53,10 @@ Global
 		{91F03D08-CDC5-49D4-9F4C-076B70CD23C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91F03D08-CDC5-49D4-9F4C-076B70CD23C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91F03D08-CDC5-49D4-9F4C-076B70CD23C0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{19B13960-54EA-41C2-8F30-29006EF305DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{19B13960-54EA-41C2-8F30-29006EF305DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{19B13960-54EA-41C2-8F30-29006EF305DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{19B13960-54EA-41C2-8F30-29006EF305DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABA16B9C-825C-4E0A-8A51-8AB2896F9417}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABA16B9C-825C-4E0A-8A51-8AB2896F9417}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABA16B9C-825C-4E0A-8A51-8AB2896F9417}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABA16B9C-825C-4E0A-8A51-8AB2896F9417}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

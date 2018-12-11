@@ -23,11 +23,11 @@ namespace Arboretum.Web.Controllers
         }
 
         /// <summary>
-        /// Gets the trees.
+        /// Gets the trees by the visible region.
         /// </summary>
         /// <param name="visibleRegion">The visible region.</param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet] // api/trees
         public async Task<IActionResult> GetTrees([FromQuery] VisibleRegionViewModel visibleRegion)
         {
             var result = await _treeService.GetTreesAsync(visibleRegion);
@@ -46,9 +46,9 @@ namespace Arboretum.Web.Controllers
         /// Gets the closest trees.
         /// </summary>
         /// <param name="visibleRegion">The visible region.</param>
-        /// <param name="latitude">The latitude.</param>
-        /// <param name="longitude">The longitude.</param>
-        /// <param name="count">The count.</param>
+        /// <param name="latitude">Current user location - latitude.</param>
+        /// <param name="longitude">Current user location - longitude.</param>
+        /// <param name="count">Trees count.</param>
         /// <returns></returns>
         [HttpGet(RestRoute.GetClosestTrees)]
         public async Task<IActionResult> GetClosestTrees([FromQuery] VisibleRegionViewModel visibleRegion, double latitude,
@@ -71,7 +71,13 @@ namespace Arboretum.Web.Controllers
             return Ok(vm);  
         }
 
-    
+
+        /// <summary>
+        /// Gets the tree by identifier.
+        /// </summary>
+        /// <param name="treeId">The tree identifier.</param>
+        /// <param name="providerId">The provider identifier.</param>
+        /// <returns></returns>
         [HttpGet(RestRoute.GetTreeById)]
         public async Task<IActionResult> GetTreeById(int treeId, ProviderName providerId)
         {
@@ -86,7 +92,12 @@ namespace Arboretum.Web.Controllers
             return Ok(vm);
         }
 
-        //TODO: Method bellow do same work. Merge these two!
+        /// <summary>Gets the closest tree by dendrology name.</summary>
+        /// <param name="region">The region.</param>
+        /// <param name="latitude">Current user location - latitude.</param>
+        /// <param name="longitude">Current user location - longitude.</param>
+        /// <param name="commonName">Czech dendrology name.</param>
+        /// <returns>Tree</returns>
         [HttpGet(RestRoute.GetClosestTreeByDendrology)]
         public async Task<IActionResult> GetClosestTreeByDendrology([FromQuery] VisibleRegionViewModel region, double latitude, double longitude, string commonName)      
         {
@@ -97,26 +108,14 @@ namespace Arboretum.Web.Controllers
             }
 
             var closestTree = result.Data;
-            return Ok(closestTree);
+            var vm = ViewModelMapper.MapTreeToViewModel(closestTree);
+            return Ok(vm);
         }
-
-        //[HttpGet(RestRoute.GetClosestTree)]
-        //public async Task<IActionResult> GetClosestTreeAsync([FromQuery] VisibleRegionViewModel region, double latitude, double longitude, string commonName)
-        //{
-        //    var result = await _treeService.GetClosestTree(region, latitude, longitude, commonName);
-        //    if (result.HasViolations)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    var closestTree = result.Data;
-        //    return Ok(closestTree);
-        //}
 
         /// <summary>
         /// Creates the tree.
         /// </summary>
-        /// <param name="viewModel">The view model.</param>
+        /// <param name="viewModel">Tree to add.</param>
         /// <returns></returns>
         [HttpPost]
         public IActionResult CreateTree([FromQuery] CreateTreeViewModel viewModel)
@@ -142,8 +141,8 @@ namespace Arboretum.Web.Controllers
         /// <summary>
         /// Edits the tree.
         /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <param name="viewModel">The view model.</param>
+        /// <param name="id">The tree identifier that will be edit.</param>
+        /// <param name="viewModel">The updated tree data.</param>
         /// <returns></returns>
         [HttpPut(RestRoute.UpdateTree)]
         public IActionResult EditTree(int id, [FromQuery] EditTreeViewModel viewModel)

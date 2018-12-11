@@ -51,16 +51,9 @@ namespace Arboretum.AppCore.Services
             }
         }
 
-        public async Task<ServiceResult<IList<ITree>>> GetClosestTreesAsync(IRegion region, double latitude, double longitude, int count = default(int))
+        public async Task<ServiceResult<IList<ITree>>> GetClosestTreesAsync(IRegion region, double latitude, double longitude, int? count = null)
         {
             var result = new ServiceResult<IList<ITree>>();
-
-            if (count <= 0)
-            {
-                result.AddViolation("Count must be bigger than 0.");
-                return result;
-            }
-
             try
             {
                 var treesServiceResult = await GetTreesAsync(region);
@@ -69,7 +62,7 @@ namespace Arboretum.AppCore.Services
                 var geolocationResults = geolocationDistanceTable.Calculate(treesServiceResult.Data, latitude, longitude);
                 var closestTrees = MapGeolocationResultsToDomainTrees(geolocationResults);
 
-                result.Data = count == default(int) ? closestTrees.ToList() : closestTrees.Take(count).ToList();
+                result.Data = count == null ? closestTrees.ToList() : closestTrees.Take(count.Value).ToList();
                 return result;
             }
             catch (Exception exception)

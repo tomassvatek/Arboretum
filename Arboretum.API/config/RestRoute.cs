@@ -10,7 +10,6 @@ namespace Arboretum.Web.Config
         public const string ControllerRoute = "api/[controller]";   
 
         public const string GetTreeById = "{treeId}/provider/{providerId}";
-        public const string GetClosestTree = "closest";
         public const string GetClosestTreeByDendrology = "closest/dendrology/{commonName}"; 
         public const string GetClosestTrees = "closest/{count}";
         public const string UpdateTree = "{id}";

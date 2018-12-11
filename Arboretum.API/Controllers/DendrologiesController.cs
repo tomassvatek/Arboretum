@@ -17,6 +17,8 @@ namespace Arboretum.Web.Controllers
             _dendrologyService = dendrologyService;
         }
 
+        /// <summary>Get reduced  dendrologies.</summary>
+        /// <param name="reduction">Reduction provides paging information.</param>
         [HttpGet]
         public IActionResult Dendrologies([FromQuery] Reduction reduction)
         {
@@ -30,6 +32,8 @@ namespace Arboretum.Web.Controllers
             return Ok(dendrologies);
         }
 
+        /// <summary>Gets a single dendrology</summary>
+        /// <param name="id">dendrology identifier</param>
         [HttpGet(RestRoute.GeDendrologyById)]
         public IActionResult GetDendrologyById(int id)
         {

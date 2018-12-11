@@ -29,10 +29,12 @@ namespace Arboretum.Infrastructure.Repositories
             var query = DbContext.Dendrologies;
             if (reduction.PageNumber != null && reduction.PageSize != null)
             {
-                var reductionDendrologies = query.Skip((reduction.PageNumber.Value - 1) * reduction.PageSize.Value)
+                var skipCount = (reduction.PageNumber.Value - 1) * reduction.PageSize.Value;
+                var reductionDendrologies = query.Skip(skipCount)
                     .Take(reduction.PageSize.Value);
 
-                var reductionDomainDendrologies = MapDbDendrologiesToDomain(reductionDendrologies).ToList();
+                var reductionDomainDendrologies = MapDbDendrologiesToDomain(reductionDendrologies)
+                    .ToList();
 
                 return reductionDomainDendrologies;
             }
