@@ -17,6 +17,10 @@ namespace Arboretum.Infrastructure.Repositories
             DbContext = dbContext;
         }
 
+        /// <summary>
+        /// Gets the dendrologies.
+        /// </summary>
+        /// <returns></returns>
         public IList<IDendrology> GetDendrologies()
         {
             var query = DbContext.Dendrologies;
@@ -24,6 +28,11 @@ namespace Arboretum.Infrastructure.Repositories
             return domainDendrologies;
         }
 
+        /// <summary>
+        /// Gets the dendrologies.
+        /// </summary>
+        /// <param name="reduction">The reduction.</param>
+        /// <returns></returns>
         public IList<IDendrology> GetDendrologies(IReduction reduction)
         {
             var query = DbContext.Dendrologies;
@@ -42,12 +51,22 @@ namespace Arboretum.Infrastructure.Repositories
             return GetDendrologies();
         }
 
+        /// <summary>
+        /// Gets the dendrology by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public IDendrology GetDendrologyById(int id)
         {
             var domainDendrologies = GetDendrologies().First(d => d.Id == id);
             return domainDendrologies;
         }
 
+        /// <summary>
+        /// Maps the database dendrologies to domain.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
         private IQueryable<IDendrology> MapDbDendrologiesToDomain(IQueryable<Persistence.Entities.Dendrology> query)
         {
             return query.Select(d => new Dendrology

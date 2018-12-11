@@ -54,11 +54,6 @@ namespace Arboretum.Web.Controllers
         public async Task<IActionResult> GetClosestTrees([FromQuery] VisibleRegionViewModel visibleRegion, double latitude,
             double longitude, int count)
         {
-            //visibleRegion.LatitudeMax = 49.797345;
-            //visibleRegion.LatitudeMin = 49.795380;
-            //visibleRegion.LongitudeMax = 12.634210;
-            //visibleRegion.LongitudeMin = 12.633100;
-
             var result = await _treeService.GetClosestTreesAsync(visibleRegion, latitude, longitude, count);
             if (result.HasViolations)
             {
@@ -147,7 +142,6 @@ namespace Arboretum.Web.Controllers
         [HttpPut(RestRoute.UpdateTree)]
         public IActionResult EditTree(int id, [FromQuery] EditTreeViewModel viewModel)
         {
-            //TODO: Move to static method
             var domainTree = new Tree
             {
                 Age = viewModel.Age,

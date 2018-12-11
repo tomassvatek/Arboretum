@@ -18,6 +18,11 @@ namespace Arboretum.Infrastructure.Repositories
             DbContext = dbContext;
         }
 
+        /// <summary>
+        /// Gets the trees from database.
+        /// </summary>
+        /// <param name="region">The current user region.</param>
+        /// <returns></returns>
         public IList<ITree> GetTrees(IRegion region)
         {
             var query = DbContext.Trees
@@ -31,6 +36,11 @@ namespace Arboretum.Infrastructure.Repositories
         }
 
 
+        /// <summary>
+        /// Gets the tree by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public ITree GetTreeById(int id)
         {
             var query = DbContext.Trees.Where(t => t.Id == id);
@@ -39,20 +49,16 @@ namespace Arboretum.Infrastructure.Repositories
             return domainTree;
         }
 
-        //public IList<Tree> GetClosestTrees(IRegion region,  double latitude, double longitude, int count)
-        //{
-        //    if (count <= 0)
-        //    {
-        //        throw new ArgumentException("Count must be bigger than 0.");
-        //    }
-
-        //    var trees = GetTrees(region);
-        //    var sortedTrees = SortTreesByDistance(trees, latitude, longitude).Take(count).ToList();
-
-        //    return sortedTrees;
-        //}
-
-
+        /// <summary>
+        /// Creates the tree.
+        /// </summary>
+        /// <param name="tree">The tree.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">
+        /// Tree cannot be null.
+        /// or
+        /// Dendrology with id={tree.Dendrology.Id}
+        /// </exception>
         public ITree CreateTree(Tree tree)
         {
             if (tree == null)
@@ -85,6 +91,16 @@ namespace Arboretum.Infrastructure.Repositories
             return tree;
         }
 
+        /// <summary>
+        /// Updates the tree.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="tree">The tree.</param>
+        /// <exception cref="ArgumentException">
+        /// Tree cannot be null.
+        /// or
+        /// Tree with id={id}
+        /// </exception>
         public void UpdateTree(int id, Tree tree)
         {
             if (tree == null)
@@ -107,6 +123,11 @@ namespace Arboretum.Infrastructure.Repositories
             DbContext.SaveChanges();
         }
 
+        /// <summary>
+        /// Maps the database tree to domain.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
         private IQueryable<ITree> MapDbTreeToDomain(IQueryable<Persistence.Entities.Tree> query)
         {
             return query.Select(t => new Tree
@@ -130,26 +151,5 @@ namespace Arboretum.Infrastructure.Repositories
                 }
             });
         }
-
-        //private List<Tree> SortTreesByDistance(IList<Tree> trees, double latitude, double longitude)
-        //{
-        //    var dataTable = new GeolocationDataTable();
-        //    var closestTrees = new List<Tree>();
-
-        //    foreach (var tree in trees)
-        //    {
-        //        var distance = _distanceCalculator.CalculateDistance(new Location(latitude, longitude), new Location(tree.Latitude, tree.Longitude));
-        //        dataTable.GeolocationResults.Add(new GeolocationResult(tree, distance));
-        //    }
-
-        //    dataTable.GeolocationResults.Sort();
-
-        //    foreach (var item in dataTable.GeolocationResults)
-        //    {
-        //        closestTrees.Add((Tree)item.Geolocation);
-        //    }
-
-        //    return closestTrees;
-        //}
     }
 }

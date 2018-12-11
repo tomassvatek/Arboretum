@@ -22,6 +22,11 @@ namespace Arboretum.AppCore.Services
             _restRepository = restRepository;
         }
 
+        /// <summary>
+        /// Gets the trees asynchronous.
+        /// </summary>
+        /// <param name="region">The current user region.</param>
+        /// <returns></returns>
         public async Task<ServiceResult<IList<ITree>>> GetTreesAsync(IRegion region)
         {
             var result = new ServiceResult<IList<ITree>>();
@@ -51,6 +56,14 @@ namespace Arboretum.AppCore.Services
             }
         }
 
+        /// <summary>
+        /// Gets the closest trees asynchronous.
+        /// </summary>
+        /// <param name="region">The current user region.</param>
+        /// <param name="latitude">User location - latitude.</param>
+        /// <param name="longitude">User location - longitude.</param>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public async Task<ServiceResult<IList<ITree>>> GetClosestTreesAsync(IRegion region, double latitude, double longitude, int? count = null)
         {
             var result = new ServiceResult<IList<ITree>>();
@@ -72,7 +85,14 @@ namespace Arboretum.AppCore.Services
             }
         }
 
-
+        /// <summary>
+        /// Gets the closest tree.
+        /// </summary>
+        /// <param name="region">The current user region..</param>
+        /// <param name="latitude">User location - latitude.</param>
+        /// <param name="longitude">User location - longitude.</param>
+        /// <param name="commonName">Dendrology name (commonName).</param>
+        /// <returns></returns>
         public async Task<ServiceResult<ITree>> GetClosestTree(IRegion region, double latitude, double longitude, string commonName)
         {
             var result = new ServiceResult<ITree>();
@@ -97,6 +117,12 @@ namespace Arboretum.AppCore.Services
         }
 
 
+        /// <summary>
+        /// Gets the tree by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="providerName">Name of the provider.</param>
+        /// <returns></returns>
         public async Task<ServiceResult<ITree>> GetTreeById(int id, ProviderName providerName)
         {
             if (providerName == ProviderName.ArboretumDb)
@@ -109,6 +135,11 @@ namespace Arboretum.AppCore.Services
             return restResult;
         }
 
+        /// <summary>
+        /// Creates the tree.
+        /// </summary>
+        /// <param name="tree">The tree.</param>
+        /// <returns></returns>
         public ServiceResult<ITree> CreateTree(Tree tree)
         {
             var result = new ServiceResult<ITree>();
@@ -126,7 +157,12 @@ namespace Arboretum.AppCore.Services
             }
         }
 
-        //TODO: Upravit logiku, která se řídí podle providera
+        /// <summary>
+        /// Updates the tree.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="tree">The tree.</param>
+        /// <returns></returns>
         public ServiceResult UpdateTree(int id, Tree tree)
         {
             var result = new ServiceResult();
@@ -149,6 +185,11 @@ namespace Arboretum.AppCore.Services
             }
         }
 
+        /// <summary>
+        /// Gets the tree by identifier from database.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         private ServiceResult<ITree> GetTreeByIdFromDb(int id)
         {
             var result = new ServiceResult<ITree>();
@@ -172,6 +213,12 @@ namespace Arboretum.AppCore.Services
             }
         }
 
+        /// <summary>
+        /// Gets the tree by identifier from rest.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="providerName">Name of the provider.</param>
+        /// <returns></returns>
         private async Task<ServiceResult<ITree>> GetTreeByIdFromRest(int id, ProviderName providerName)
         {
             var result = new ServiceResult<ITree>();
@@ -196,6 +243,11 @@ namespace Arboretum.AppCore.Services
         }
 
 
+        /// <summary>
+        /// Maps the geolocation results to domain trees.
+        /// </summary>
+        /// <param name="geolocationResults">The geolocation results.</param>
+        /// <returns></returns>
         private IList<ITree> MapGeolocationResultsToDomainTrees(IList<GeolocationResult> geolocationResults)
         {
             var domainTrees = new List<ITree>();
@@ -211,6 +263,14 @@ namespace Arboretum.AppCore.Services
             return domainTrees;
         }
 
+        /// <summary>
+        /// Determines whether a tree is duplicated.
+        /// </summary>
+        /// <param name="trees">The trees.</param>
+        /// <param name="tree">The tree.</param>
+        /// <returns>
+        ///   <c>true</c> if [is duplicate species] [the specified trees]; otherwise, <c>false</c>.
+        /// </returns>
         private bool isDuplicateSpecies(IList<ITree> trees, ITree tree)
         {
             return trees.Any(t => t.Dendrology.CommonName == tree.Dendrology.CommonName);

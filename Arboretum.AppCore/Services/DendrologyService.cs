@@ -17,6 +17,10 @@ namespace Arboretum.AppCore.Services
             _dendrologyRepository = dendrologyRepository;
         }
 
+        /// <summary>
+        /// Gets the dendrologies.
+        /// </summary>
+        /// <returns></returns>
         public ServiceResult<List<IDendrology>> GetDendrologies()
         {
             var result = new ServiceResult<List<IDendrology>>();
@@ -34,6 +38,11 @@ namespace Arboretum.AppCore.Services
             }
         }
 
+        /// <summary>
+        /// Gets the dendrologies.
+        /// </summary>
+        /// <param name="reduction">The reduction.</param>
+        /// <returns></returns>
         public ServiceResult<IList<IDendrology>> GetDendrologies(IReduction reduction)
         {
             var result = new ServiceResult<IList<IDendrology>>();
@@ -51,6 +60,11 @@ namespace Arboretum.AppCore.Services
             }
         }
 
+        /// <summary>
+        /// Gets the dendrology by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public ServiceResult<IDendrology> GetDendrologyById(int id)
         {
             var result = new ServiceResult<IDendrology>();

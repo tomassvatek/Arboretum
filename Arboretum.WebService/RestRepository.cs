@@ -24,6 +24,11 @@ namespace Arboretum.WebService
             RegisterProviders();
         }
 
+        /// <summary>
+        /// Gets the trees asynchronous.
+        /// </summary>
+        /// <param name="region">The region.</param>
+        /// <returns></returns>
         public async Task<IList<ITree>> GetTreesAsync(IRegion region)
         {
             var trees = new List<ITree>();
@@ -37,10 +42,16 @@ namespace Arboretum.WebService
                     providerTrees.Clear();
                 }
             }
-
             return trees;
         }
 
+        /// <summary>
+        /// Gets the tree by identifier asynchronous.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="providerName">Name of the provider.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">Provider with id={id}</exception>
         public async Task<ITree> GetTreeByIdAsync(int id, ProviderName providerName)
         {
             var provider = GetProviderByName(providerName);
@@ -54,11 +65,19 @@ namespace Arboretum.WebService
         }
 
 
+        /// <summary>
+        /// Gets the name of the provider by.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns></returns>
         private ITreeDataProvider GetProviderByName(ProviderName name)
         {
             return _treeProviders.FirstOrDefault(p => p.Name == name);
         }
 
+        /// <summary>
+        /// Registers the providers.
+        /// </summary>
         private void RegisterProviders()
         {
             _treeProviders.Add(new SPK(_httpClient));

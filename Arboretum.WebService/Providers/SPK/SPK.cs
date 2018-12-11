@@ -32,7 +32,11 @@ namespace Arboretum.WebService.Providers.SPK
         public IList<RequestHeaders> RequestHeaders { get; set; } = new List<RequestHeaders>();
 
 
-        //TODO: SPK musí mít rozmezí mezi dvěmi requsty alespon 2 vteřiny. Pokud ne, vrací expcetion.
+        /// <summary>
+        /// Gets the trees asynchronous from SPK provider.
+        /// </summary>
+        /// <param name="region">The current user region.</param>
+        /// <returns></returns>
         public async Task<System.Collections.Generic.IList<ITree>> GetTreesAsync(IRegion region)
         {
             try
@@ -52,7 +56,11 @@ namespace Arboretum.WebService.Providers.SPK
             }
         }
 
-        //TODO: SPK musí mít rozmezí mezi dvěmi requsty alespon 2 vteřiny. Pokud ne, vrací expcetion.
+        /// <summary>
+        /// Gets the tree by identifier asynchronous.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public async Task<ITree> GetTreeByIdAsync(int id)
         {
             try
@@ -69,6 +77,11 @@ namespace Arboretum.WebService.Providers.SPK
             }
         }
 
+        /// <summary>
+        /// Maps to domain.
+        /// </summary>
+        /// <param name="trees">The trees.</param>
+        /// <returns></returns>
         private IList<ITree> MapToDomain(IList<TreeDto> trees)
         {
             return trees?.Select(t => new Tree()
