@@ -6,7 +6,7 @@ using Arboretum.AppCore.Models;
 using Arboretum.AppCore.Models.Interfaces;
 using Arboretum.Common;
 using Arboretum.Common.Enums;
-using Arboretum.WebService.Helpers;
+using Arboretum.WebService.Common;
 using Arboretum.WebService.HttpClient;
 using Arboretum.WebService.Providers.Interfaces;
 

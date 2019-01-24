@@ -26,11 +26,12 @@ namespace Arboretum.Web.Controllers
         /// Gets the trees by the visible region.
         /// </summary>
         /// <param name="visibleRegion">The visible region.</param>
+        /// <param name="commonName">The common dendrology name</param>
         /// <returns></returns>
         [HttpGet] // api/trees
-        public async Task<IActionResult> GetTrees([FromQuery] VisibleRegionViewModel visibleRegion)
+        public async Task<IActionResult> GetTrees([FromQuery] VisibleRegionViewModel visibleRegion, string commonName)  
         {
-            var result = await _treeService.GetTreesAsync(visibleRegion);
+            var result = await _treeService.GetTreesAsync(visibleRegion, commonName);
             if (result.HasViolations)
             {
                 return BadRequest(result.ToString());

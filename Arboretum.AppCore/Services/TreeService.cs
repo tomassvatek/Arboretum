@@ -25,9 +25,9 @@ namespace Arboretum.AppCore.Services
         /// <summary>
         /// Gets the trees asynchronous.
         /// </summary>
-        /// <param name="region">The current user region.</param>
+        /// <param name="region">The current user region.</param>   
         /// <returns></returns>
-        public async Task<ServiceResult<IList<ITree>>> GetTreesAsync(IRegion region)
+        public async Task<ServiceResult<IList<ITree>>> GetTreesAsync(IRegion region, string commonName = null)
         {
             var result = new ServiceResult<IList<ITree>>();
             try

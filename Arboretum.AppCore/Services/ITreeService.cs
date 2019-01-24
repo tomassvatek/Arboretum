@@ -9,7 +9,7 @@ namespace Arboretum.AppCore.Services
 {
     public interface ITreeService
     {
-        Task<ServiceResult<IList<ITree>>> GetTreesAsync(IRegion region);
+        Task<ServiceResult<IList<ITree>>> GetTreesAsync(IRegion region, string commonName = null);
 
         Task<ServiceResult<ITree>> GetTreeById(int id, ProviderName providerName);
 
